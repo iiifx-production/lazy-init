@@ -11,8 +11,8 @@ class LazyInitHelper {
 
     use LazyInitStaticTrait;
 
-    public static function lazyInit ( $value, $key ) {
-        return self::lazyInitStatic ( $value, $key );
+    public static function lazyInit ( $value, $key, $params = [] ) {
+        return self::lazyInitStatic ( $value, $key, $params );
     }
 
 }
