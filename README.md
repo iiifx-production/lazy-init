@@ -1,1 +1,3 @@
 # LazyInit
+
+### Lazy initialization helper
