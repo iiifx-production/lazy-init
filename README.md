@@ -37,3 +37,4 @@ $ composer require iiifx-production/lazy-init
 [link-downloads]: https://packagist.org/packages/iiifx-production/lazy-init
 [link-travis]: https://travis-ci.org/iiifx-production/lazy-init
 
+.
