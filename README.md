@@ -1,30 +1,30 @@
 # LazyInit
 
-LazyInit - хелпер для быстрой организации ленивой инициализации
+LazyInit - С…РµР»РїРµСЂ РґР»СЏ Р±С‹СЃС‚СЂРѕР№ РѕСЂРіР°РЅРёР·Р°С†РёРё Р»РµРЅРёРІРѕР№ РёРЅРёС†РёР°Р»РёР·Р°С†РёРё
 
 [![Latest Version on Packagist][ico-version]][link-packagist] [![Build Status][ico-travis]][link-travis] [![Software License][ico-license]](LICENSE.md) [![Total Downloads][ico-downloads]][link-downloads]
 
-## Установка
+## РЈСЃС‚Р°РЅРѕРІРєР°
 
-Используя Composer:
+РСЃРїРѕР»СЊР·СѓСЏ Composer:
 
 ``` bash
 $ composer require iiifx-production/lazy-init
 ```
 
-## Использование
+## РСЃРїРѕР»СЊР·РѕРІР°РЅРёСЏ
 
 @TODO
 
-## !!! Важно !!!
+## !!! Р’Р°Р¶РЅРѕ !!!
 
 @TODO
 
-## Тесты
+## РўРµСЃС‚С‹
 
 @TODO
 
-## Лизценция
+## Р›РёС†РµРЅР·РёСЏ
 
 [![Software License][ico-license]](LICENSE.md)
 
@@ -36,3 +36,4 @@ $ composer require iiifx-production/lazy-init
 [link-packagist]: https://packagist.org/packages/iiifx-production/lazy-init
 [link-downloads]: https://packagist.org/packages/iiifx-production/lazy-init
 [link-travis]: https://travis-ci.org/iiifx-production/lazy-init
+
