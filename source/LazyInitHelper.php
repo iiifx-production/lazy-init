@@ -11,8 +11,15 @@ class LazyInitHelper {
 
     use LazyInitStaticTrait;
 
-    public static function lazyInit ( $value, $key, $params = [] ) {
-        return self::lazyInitStatic ( $value, $key, $params );
+    /**
+     * @param \Closure $closure
+     * @param string   $key
+     * @param mixed[]  $params
+     *
+     * @return mixed
+     */
+    public static function lazyInit ( $closure, $key, $params = [ ] ) {
+        return self::lazyInitStatic( $closure, $key, $params );
     }
 
 }

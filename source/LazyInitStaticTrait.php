@@ -15,27 +15,20 @@ trait LazyInitStaticTrait {
     protected static $lazyInitStaticData = [ ];
 
     /**
-     * @param mixed|\Closure $value
-     * @param string         $key
-     *
-     * @param array          $params
+     * @param \Closure $closure
+     * @param string   $key
+     * @param mixed[]  $params
      *
      * @return mixed
      */
-    protected static function lazyInitStatic ( $value, $key, $params = [] ) {
-        # Проверяем наличие кэшированного значения
-        if ( !array_key_exists( $key, self::$lazyInitStaticData ) ) {
-            # Еще не создано, создаем
-            if ( $value instanceof \Closure ) {
-                # Это замыкание, выполняем его
-                self::$lazyInitStaticData[ $key ] = call_user_func_array( $value, $params );
-            } else {
-                # Это просто значение, сохраняем его
-                self::$lazyInitStaticData[ $key ] = $value;
+    protected static function lazyInitStatic ( $closure, $key, $params = [ ] ) {
+        if ( !array_key_exists( $key, static::$lazyInitStaticData ) ) {
+            if ( !( $closure instanceof \Closure ) ) {
+                throw new \InvalidArgumentException();
             }
+            static::$lazyInitStaticData[ $key ] = call_user_func_array( $closure, $params );
         }
-        # Возвращаем кэшированный результат
-        return self::$lazyInitStaticData[ $key ];
+        return static::$lazyInitStaticData[ $key ];
     }
 
 }
