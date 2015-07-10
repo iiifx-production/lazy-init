@@ -2,19 +2,31 @@
     "name": "iiifx-production/lazy-init",
     "type": "extension",
     "description": "LazyInit - lazy initialization helper",
-    "keywords": ["lazy-init","lazy","php"],
+    "keywords": [
+        "lazy-init",
+        "lazy",
+        "php"
+    ],
     "homepage": "https://github.com/iiifx-production/lazy-init",
     "license": "MIT License",
     "authors": [
-        { "name": "Vitaliy IIIFX Khomenko", "email": "iiifx@yandex.com" }
+        {
+            "name": "Vitaliy IIIFX Khomenko",
+            "email": "iiifx@yandex.com"
+        }
     ],
     "require": {
         "php": ">=5.4"
     },
     "require-dev": {
-        "phpunit/phpunit": "*@stable"
+        "phpunit/phpunit": "4.7.*@stable"
     },
     "autoload": {
-        "psr-4": { "iiifx\\LazyInit\\": "source/" }
+        "psr-4": {
+            "iiifx\\LazyInit\\": "source/"
+        }
+    },
+    "scripts": {
+        "test": "phpunit tests"
     }
 }
