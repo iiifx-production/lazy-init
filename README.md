@@ -9,7 +9,7 @@ LazyInit - хелпер для быстрой организации ленив�
 Используя Composer:
 
 ``` bash
-$ composer require iiifx-production/lazy-init
+$ composer require "iiifx-production/lazy-init:0.2.*"
 ```
 
 ## Использования
@@ -36,5 +36,3 @@ $ composer require iiifx-production/lazy-init
 [link-packagist]: https://packagist.org/packages/iiifx-production/lazy-init
 [link-downloads]: https://packagist.org/packages/iiifx-production/lazy-init
 [link-travis]: https://travis-ci.org/iiifx-production/lazy-init
-
-.
