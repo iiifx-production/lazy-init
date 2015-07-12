@@ -41,7 +41,7 @@ class DeepThought {
 
 $deepThought = new DeepThought();
 echo $deepThought->getAnswer(); # 42
-``` 
+```
 
 ## Установка
 
@@ -53,7 +53,43 @@ $ composer require "iiifx-production/lazy-init:0.2.*"
 
 ## Использование
 
-@TODO
+Простой геттер:
+``` php
+    /**
+     * @return string
+     */
+    public function getDate () {
+        return $this->lazyInit( function () {
+            return date( 'd.m.Y' );
+        }, __METHOD__ );
+    }
+```
+
+Геттер с зависимостью от входящего значения:
+``` php
+    /**
+     * @var    string
+     *
+     * @return mixed[]
+     */
+    public function parseString ( $string ) {
+        return $this->lazyInit( function () use ( $string ) {
+            return explode( ':', $string );
+        }, __METHOD__ . $string );
+    }
+```
+``` php
+    /**
+     * @var    int
+     *
+     * @return string
+     */
+    public function formatTimastamp ( $timastamp ) {
+        return $this->lazyInit( function ( $t ) {
+            return date( 'd.m.Y', $t );
+        }, __METHOD__ . $timastamp, [ $timastamp ] );
+    }
+```
 
 ## Важно
 
