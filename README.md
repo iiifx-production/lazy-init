@@ -1,6 +1,6 @@
 # LazyInit
 
-LazyInit - хелпер для быстрой организации ленивой инициализации
+LazyInit - хелпер для быстрого создания методов ленивой(отложенной) инициализации
 
 [![Latest Version on Packagist][ico-version]][link-packagist] [![Build Status][ico-travis]][link-travis] [![Software License][ico-license]](LICENSE.md) [![Total Downloads][ico-downloads]][link-downloads]
 
