@@ -89,7 +89,7 @@ echo $lazy->getDate(); # '12.07.2015'
 
 Геттер с зависимостью от входящего значения:
 ``` php
-class SomeClass {
+class Lazy {
 
     use \iiifx\LazyInit\LazyInitTrait;
 
