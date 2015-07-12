@@ -54,8 +54,9 @@ $ composer require "iiifx-production/lazy-init:0.2.*"
 ## Использование
 
 LazyInitTrait содержит метод lazyInit() и свойство $lazyInitData, в котором буферизирует результаты вычислений.
-
-#### lazyInit( $container, $key, $params = [] ) :
+``` php
+mixed lazyInit( Closure $container, string $key, array $params = [] )
+```
 
 - $closure - Closure-контейнер, содержащий в себе вычисления, должен вернуть результат.
 - $key - Ключ для сохранения результата вычисления Closure-контейнера, как правило это __METHOD__.
