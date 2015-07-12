@@ -4,7 +4,7 @@ LazyInit - хелпер для быстрого создания методов 
 
 [![Latest Version on Packagist][ico-version]][link-packagist] [![Build Status][ico-travis]][link-travis] [![Software License][ico-license]](LICENSE.md) [![Total Downloads][ico-downloads]][link-downloads]
 
-Отложенная (ленивая) инициализация (Lazy initialization) - приём в программировании, когда некоторая ресурсоёмкая операция (создание объекта, вычисление значения) выполняется непосредственно перед тем, как будет использован её результат. Таким образом, инициализация выполняется «по требованию», а не заблаговременно.
+Отложенная (ленивая) инициализация ([Lazy initialization][link-wikipedia]) - приём в программировании, когда некоторая ресурсоёмкая операция (создание объекта, вычисление значения) выполняется непосредственно перед тем, как будет использован её результат. Таким образом, инициализация выполняется «по требованию», а не заблаговременно.
 
 Классический пример использования:
 ``` php
@@ -67,6 +67,7 @@ $ composer require "iiifx-production/lazy-init:0.2.*"
 
 [![Software License][ico-license]](LICENSE.md)
 
+
 [ico-version]: https://img.shields.io/packagist/v/iiifx-production/lazy-init.svg
 [ico-license]: https://img.shields.io/badge/license-MIT-brightgreen.svg
 [ico-downloads]: https://img.shields.io/packagist/dt/iiifx-production/lazy-init.svg
@@ -76,5 +77,4 @@ $ composer require "iiifx-production/lazy-init:0.2.*"
 [link-packagist]: https://packagist.org/packages/iiifx-production/lazy-init
 [link-downloads]: https://packagist.org/packages/iiifx-production/lazy-init
 [link-travis]: https://travis-ci.org/iiifx-production/lazy-init
-
-.
+[link-wikipedia]: https://ru.wikipedia.org/wiki/%D0%9E%D1%82%D0%BB%D0%BE%D0%B6%D0%B5%D0%BD%D0%BD%D0%B0%D1%8F_%D0%B8%D0%BD%D0%B8%D1%86%D0%B8%D0%B0%D0%BB%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D1%8F
