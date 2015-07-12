@@ -8,6 +8,8 @@ use Closure;
  * Class LazyInitTrait
  *
  * @package iiifx\LazyInit
+ * @author Vitaliy IIIFX Khomenko <iiifx@yandex.com>
+ * @link https://github.com/iiifx-production/lazy-init
  */
 trait LazyInitTrait {
 

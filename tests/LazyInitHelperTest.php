@@ -4,12 +4,6 @@ use iiifx\LazyInit\LazyInitHelper;
 
 class LazyInitHelperTest extends PHPUnit_Framework_TestCase {
 
-    function testInitNoClosure () {
-        $this->setExpectedException( 'InvalidArgumentException' );
-        /** @noinspection PhpParamsInspection */
-        LazyInitHelper::lazyInit( '', '' );
-    }
-
     function testInitClosure () {
         $this->assertNull( LazyInitHelper::lazyInit( function () {}, '1' ) );
         $this->assertNull( LazyInitHelper::lazyInit( function () {

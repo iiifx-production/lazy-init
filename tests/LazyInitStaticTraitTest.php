@@ -10,12 +10,6 @@ class LazyInitStaticTraitTest extends PHPUnit_Framework_TestCase {
         static::$lazyInitStaticData = [];
     }
 
-    function testInitNoClosure () {
-        $this->setExpectedException( 'InvalidArgumentException' );
-        /** @noinspection PhpParamsInspection */
-        static::lazyInitStatic( '', '' );
-    }
-
     function testInitClosure () {
         $this->assertNull( static::lazyInitStatic( function () {}, '1' ) );
         $this->assertNull( static::lazyInitStatic( function () {

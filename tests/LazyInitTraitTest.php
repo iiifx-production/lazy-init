@@ -6,12 +6,6 @@ class LazyInitTraitTest extends PHPUnit_Framework_TestCase {
 
     use LazyInitTrait;
 
-    function testInitNoClosure () {
-        $this->setExpectedException( 'InvalidArgumentException' );
-        /** @noinspection PhpParamsInspection */
-        $this->lazyInit( '', '' );
-    }
-
     function testInitClosure () {
         $this->assertNull( $this->lazyInit( function () {}, '1' ) );
         $this->assertNull( $this->lazyInit( function () {
