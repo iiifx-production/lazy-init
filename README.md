@@ -8,30 +8,30 @@ LazyInit - хелпер для быстрого создания методов 
 
 Классический пример использования:
 ``` php
-class LazyValue {
+class DeepThought {
 
-    protected $value;
+    protected $answer;
 
-    public function getValue () {
-        if ( is_null( $this->value ) ) {
-            $this->value = 42;
+    public function getAnswer () {
+        if ( is_null( $this->answer ) ) {
+            $this->answer = 42;
         }
-        return $this->value;
+        return $this->answer;
     }
 
 }
 
-$lazyValue = new LazyValue();
-echo $lazyValue->getValue(); # 42
+$deepThought = new DeepThought();
+echo $deepThought->getAnswer(); # 42
 ``` 
 
 Аналогичный пример, но с использованием LazyInit:
 ``` php
-class LazyValue {
+class DeepThought {
 
     use \iiifx\LazyInit\LazyInitTrait;
 
-    public function getValue () {
+    public function getAnswer () {
         return $this->lazyInit( function () {
             return 42;
         }, __METHOD__ );
@@ -39,8 +39,8 @@ class LazyValue {
 
 }
 
-$lazyValue = new LazyValue();
-echo $lazyValue->getValue(); # 42
+$deepThought = new DeepThought();
+echo $deepThought->getAnswer(); # 42
 ``` 
 
 ## Установка
