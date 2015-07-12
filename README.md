@@ -219,10 +219,6 @@ echo Multiton::getInstance( 'slave' )->key; # 'slave'
 echo Multiton::getInstance( 'master' )->key; # 'master'
 ```
 
-## Важно
-
-@TODO
-
 ## Тесты
 
 [![Build Status][ico-travis]][link-travis]
