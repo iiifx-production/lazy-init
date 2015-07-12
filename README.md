@@ -86,6 +86,7 @@ echo $lazy->getDate(); # '12.07.2015'
 ```
 
 
+
 Геттер с зависимостью от входящего значения:
 ``` php
 class SomeClass {
@@ -122,6 +123,7 @@ var_export( $lazy->formatTimastamp( time() ) ); # '12.07.2015'
 ```
 
 
+
 Использование в статических методах:
 ``` php
 class LazyStatic {
@@ -143,6 +145,7 @@ echo LazyStatic::getDate(); # '12.07.2015'
 ```
 
 
+
 Использование хелпера за пределами классов:
 ``` php
 use iiifx\LazyInit\LazyInitHelper;
@@ -157,27 +160,30 @@ echo buildString( [ 1, 5, 32 ] ); # '1.5.32'
 ```
 
 
+
 Использование при создании одиночки([Singleton][link-wikipedia-singleton]):
 ``` php
 class Singleton {
 
     use \iiifx\LazyInit\LazyInitStaticTrait;
 
-    private function __construct() {}
-    private function __clone() {}
-    private function __wakeup() {}
+    private function __construct () {}
+    private function __clone () {}
+    private function __wakeup () {}
 
     /**
      * @return static
      */
-    public static function getInstance() {
+    public static function getInstance () {
         return static::lazyInitStatic( function () {
             return new static();
         }, __METHOD__ );
     }
 
 }
+$instance = Singleton::getInstance();
 ```
+
 
 
 Использование при создании пула одиночек([Multiton][link-wikipedia-multiton]):
@@ -186,8 +192,8 @@ class Multiton {
 
     use \iiifx\LazyInit\LazyInitStaticTrait;
 
-    private function __clone() {}
-    private function __wakeup() {}
+    private function __clone () {}
+    private function __wakeup () {}
 
     public $key;
 
@@ -200,7 +206,7 @@ class Multiton {
      *
      * @return static
      */
-    public static function getInstance( $key ) {
+    public static function getInstance ( $key ) {
         return static::lazyInitStatic( function ( $key ) {
             return new static( $key );
         }, $key, [ $key ] );
