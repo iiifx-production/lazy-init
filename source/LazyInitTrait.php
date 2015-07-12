@@ -2,6 +2,8 @@
 
 namespace iiifx\LazyInit;
 
+use Closure;
+
 /**
  * Class LazyInitTrait
  *
@@ -15,18 +17,15 @@ trait LazyInitTrait {
     protected $lazyInitData = [ ];
 
     /**
-     * @param \Closure $closure
-     * @param string   $key
-     * @param mixed[]  $params
+     * @param Closure $container
+     * @param string  $key
+     * @param mixed[] $params
      *
      * @return mixed
      */
-    protected function lazyInit ( $closure, $key, $params = [ ] ) {
+    protected function lazyInit ( Closure $container, $key, $params = [ ] ) {
         if ( !array_key_exists( $key, $this->lazyInitData ) ) {
-            if ( !( $closure instanceof \Closure ) ) {
-                throw new \InvalidArgumentException();
-            }
-            $this->lazyInitData[ $key ] = call_user_func_array( $closure, $params );
+            $this->lazyInitData[ $key ] = call_user_func_array( $container, $params );
         }
         return $this->lazyInitData[ $key ];
     }

@@ -2,6 +2,8 @@
 
 namespace iiifx\LazyInit;
 
+use Closure;
+
 /**
  * Class LazyInitHelper
  *
@@ -12,13 +14,13 @@ class LazyInitHelper {
     use LazyInitStaticTrait;
 
     /**
-     * @param \Closure $closure
-     * @param string   $key
-     * @param mixed[]  $params
+     * @param Closure $closure
+     * @param string  $key
+     * @param mixed[] $params
      *
      * @return mixed
      */
-    public static function lazyInit ( $closure, $key, $params = [ ] ) {
+    public static function lazyInit ( Closure $closure, $key, $params = [ ] ) {
         return self::lazyInitStatic( $closure, $key, $params );
     }
 

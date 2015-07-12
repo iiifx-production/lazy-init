@@ -2,6 +2,8 @@
 
 namespace iiifx\LazyInit;
 
+use Closure;
+
 /**
  * Class LazyInitStaticTrait
  *
@@ -15,18 +17,15 @@ trait LazyInitStaticTrait {
     protected static $lazyInitStaticData = [ ];
 
     /**
-     * @param \Closure $closure
-     * @param string   $key
-     * @param mixed[]  $params
+     * @param Closure $container
+     * @param string  $key
+     * @param mixed[] $params
      *
      * @return mixed
      */
-    protected static function lazyInitStatic ( $closure, $key, $params = [ ] ) {
+    protected static function lazyInitStatic ( Closure $container, $key, $params = [ ] ) {
         if ( !array_key_exists( $key, static::$lazyInitStaticData ) ) {
-            if ( !( $closure instanceof \Closure ) ) {
-                throw new \InvalidArgumentException();
-            }
-            static::$lazyInitStaticData[ $key ] = call_user_func_array( $closure, $params );
+            static::$lazyInitStaticData[ $key ] = call_user_func_array( $container, $params );
         }
         return static::$lazyInitStaticData[ $key ];
     }
