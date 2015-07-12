@@ -55,14 +55,14 @@ $ composer require "iiifx-production/lazy-init:0.2.*"
 
 Простой геттер:
 ``` php
-    /**
-     * @return string
-     */
-    public function getDate () {
-        return $this->lazyInit( function () {
-            return date( 'd.m.Y' );
-        }, __METHOD__ );
-    }
+/**
+ * @return string
+ */
+public function getDate () {
+    return $this->lazyInit( function () {
+        return date( 'd.m.Y' );
+    }, __METHOD__ );
+}
 ```
 
 Геттер с зависимостью от входящего значения:
@@ -77,8 +77,7 @@ public function parseString ( $string ) {
         return explode( ':', $string );
     }, __METHOD__ . $string );
 }
-```
-``` php
+
 /**
  * @param int $timastamp
  *
