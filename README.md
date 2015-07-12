@@ -1,8 +1,45 @@
-# LazyInit
+# LazyInit [![Latest Version on Packagist][ico-version]][link-packagist] [![Build Status][ico-travis]][link-travis] [![Software License][ico-license]](LICENSE.md) [![Total Downloads][ico-downloads]][link-downloads]
 
-LazyInit - хелпер для быстрого создания методов ленивой(отложенной) инициализации
+LazyInit - хелпер для быстрого создания методов ленивой(отложенной) инициализации.
 
-[![Latest Version on Packagist][ico-version]][link-packagist] [![Build Status][ico-travis]][link-travis] [![Software License][ico-license]](LICENSE.md) [![Total Downloads][ico-downloads]][link-downloads]
+Отложенная (ленивая) инициализация (Lazy initialization) - приём в программировании, когда некоторая ресурсоёмкая операция (создание объекта, вычисление значения) выполняется непосредственно перед тем, как будет использован её результат. Таким образом, инициализация выполняется «по требованию», а не заблаговременно.
+
+Классический пример использования:
+``` php
+class LazyValue {
+
+    protected $value;
+
+    public function getValue () {
+        if ( is_null( $this->value ) ) {
+            $this->value = 42;
+        }
+        return $this->value;
+    }
+
+}
+
+$lazyValue = new LazyValue();
+echo $lazyValue->getValue(); # 42
+``` 
+
+Аналогичный пример, но с использованием LazyInit:
+``` php
+class LazyValue {
+
+    use \iiifx\LazyInit\LazyInitTrait;
+
+    public function getValue () {
+        return $this->lazyInit( function () {
+            return 42;
+        }, __METHOD__ );
+    }
+
+}
+
+$lazyValue = new LazyValue();
+echo $lazyValue->getValue(); # 42
+``` 
 
 ## Установка
 
@@ -12,17 +49,17 @@ LazyInit - хелпер для быстрого создания методов 
 $ composer require "iiifx-production/lazy-init:0.2.*"
 ```
 
-## Использования
+## Использование
 
 @TODO
 
-## !!! Важно !!!
+## Важно
 
 @TODO
 
 ## Тесты
 
-@TODO
+[![Build Status][ico-travis]][link-travis]
 
 ## Лицензия
 
