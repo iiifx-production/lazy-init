@@ -58,9 +58,9 @@ LazyInitTrait содержит метод lazyInit() и свойство $lazyIn
 mixed lazyInit( Closure $container, string $key, array $params = [] )
 ```
 
-- $closure - Closure-контейнер, содержащий в себе вычисления, должен вернуть результат.
-- $key - Ключ для сохранения результата вычисления Closure-контейнера, как правило это __METHOD__.
-- $params - Дополнительные переменные, которые будут переданы в Closure-контейнер при его запуске.
+- **$closure** - Closure-контейнер, содержащий в себе вычисления, должен вернуть результат.
+- **$key** - Ключ для сохранения результата вычисления Closure-контейнера, как правило это `__METHOD__`.
+- **$params** - Дополнительные данные, которые будут переданы в Closure-контейнер при его запуске.
 
 Простой геттер:
 ``` php
@@ -82,7 +82,7 @@ public function getDate () {
  * @return mixed[]
  */
 public function parseString ( $string ) {
-    return $this->lazyInit( function () use ( $string ) {
+    return $this->lazyInit( function () use ( $string ) { # Строка переадется через use
         return explode( ':', $string );
     }, __METHOD__ . $string );
 }
@@ -95,7 +95,7 @@ public function parseString ( $string ) {
 public function formatTimastamp ( $timastamp ) {
     return $this->lazyInit( function ( $t ) {
         return date( 'd.m.Y', $t );
-    }, __METHOD__ . $timastamp, [ $timastamp ] );
+    }, __METHOD__ . $timastamp, [ $timastamp ] ); # Метка времени передается через доп. данные
 }
 ```
 
@@ -110,6 +110,7 @@ public function formatTimastamp ( $timastamp ) {
 ## Лицензия
 
 [![Software License][ico-license]](LICENSE.md)
+
 
 
 [ico-version]: https://img.shields.io/packagist/v/iiifx-production/lazy-init.svg
