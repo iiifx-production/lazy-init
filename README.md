@@ -227,6 +227,12 @@ echo Multiton::getInstance( 'master' )->key; # 'master'
 
 [![Software License][ico-license]](LICENSE.md)
 
+## @TODO
+
+- Сравнение производительности с классическим способом + анализ через Vulcan Logic Disassembler
+- Автоматическое определение $key с использованием debug_backtrace() при NULL значении
+- Использование $key с префиксом "+key-name" для уникализации значения совместно с debug_backtrace()
+
 
 
 [ico-version]: https://img.shields.io/packagist/v/iiifx-production/lazy-init.svg
