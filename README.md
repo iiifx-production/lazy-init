@@ -85,6 +85,7 @@ $lazy = new Lazy();
 echo $lazy->getDate(); # '12.07.2015'
 ```
 
+
 Геттер с зависимостью от входящего значения:
 ``` php
 class SomeClass {
@@ -120,6 +121,7 @@ var_export( $lazy->parseString( 'A:B:C' ) ); # [ 0 => 'A', 1 => 'B', 2 => 'C' ]
 var_export( $lazy->formatTimastamp( time() ) ); # '12.07.2015'
 ```
 
+
 Использование в статических методах:
 ``` php
 class LazyStatic {
@@ -141,6 +143,43 @@ echo LazyStatic::getDate(); # '12.07.2015'
 ```
 
 
+Использование хелпера за пределами классов:
+``` php
+use iiifx\LazyInit\LazyInitHelper;
+
+function buildString ( $array ) {
+    return LazyInitHelper::lazyInit( function ( $v ) {
+        return implode( '.', $v );
+    }, __FUNCTION__, [ $array ] );
+}
+
+echo buildString( [ 1, 5, 32 ] ); # '1.5.32'
+```
+
+
+Использование при создании одиночки(Singleton):
+``` php
+class Singleton {
+
+    use \iiifx\LazyInit\LazyInitStaticTrait;
+
+    private function __construct() {}
+    private function __clone() {}
+    private function __wakeup() {}
+
+    /**
+     * @return static
+     */
+    public static function getInstance() {
+        return static::lazyInitStatic( function () {
+            return new static();
+        }, __METHOD__ );
+    }
+
+}
+
+$instance = Singleton::getInstance();
+```
 ## Важно
 
 @TODO
