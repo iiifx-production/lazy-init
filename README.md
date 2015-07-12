@@ -66,7 +66,7 @@ mixed lazyInit( Closure $container, string $key, array $params = [] )
 
 Простой геттер:
 ``` php
-class ... {
+class Lazy {
 
     use \iiifx\LazyInit\LazyInitTrait;
 
@@ -80,11 +80,14 @@ class ... {
     }
 
 }
+
+$lazy = new Lazy();
+echo $lazy->getDate(); # '12.07.2015'
 ```
 
 Геттер с зависимостью от входящего значения:
 ``` php
-class ... {
+class SomeClass {
 
     use \iiifx\LazyInit\LazyInitTrait;
 
@@ -111,7 +114,32 @@ class ... {
     }
 
 }
+
+$lazy = new Lazy();
+var_export( $lazy->parseString( 'A:B:C' ) ); # [ 0 => 'A', 1 => 'B', 2 => 'C' ]
+var_export( $lazy->formatTimastamp( time() ) ); # '12.07.2015'
 ```
+
+Использование в статических методах:
+``` php
+class LazyStatic {
+
+    use \iiifx\LazyInit\LazyInitStaticTrait;
+
+    /**
+     * @return string
+     */
+    public static function getDate () {
+        return self::lazyInitStatic( function () {
+            return date( 'd.m.Y' );
+        }, __METHOD__ );
+    }
+
+}
+
+echo LazyStatic::getDate(); # '12.07.2015'
+```
+
 
 ## Важно
 
