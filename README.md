@@ -1,6 +1,8 @@
-# LazyInit [![Latest Version on Packagist][ico-version]][link-packagist] [![Build Status][ico-travis]][link-travis] [![Software License][ico-license]](LICENSE.md) [![Total Downloads][ico-downloads]][link-downloads]
+# LazyInit
 
 LazyInit - хелпер для быстрого создания методов ленивой(отложенной) инициализации.
+
+[![Latest Version on Packagist][ico-version]][link-packagist] [![Build Status][ico-travis]][link-travis] [![Software License][ico-license]](LICENSE.md) [![Total Downloads][ico-downloads]][link-downloads]
 
 Отложенная (ленивая) инициализация (Lazy initialization) - приём в программировании, когда некоторая ресурсоёмкая операция (создание объекта, вычисление значения) выполняется непосредственно перед тем, как будет использован её результат. Таким образом, инициализация выполняется «по требованию», а не заблаговременно.
 
