@@ -66,38 +66,50 @@ mixed lazyInit( Closure $container, string $key, array $params = [] )
 
 Простой геттер:
 ``` php
-/**
- * @return string
- */
-public function getDate () {
-    return $this->lazyInit( function () {
-        return date( 'd.m.Y' );
-    }, __METHOD__ );
+class ... {
+
+    use \iiifx\LazyInit\LazyInitTrait;
+
+    /**
+     * @return string
+     */
+    public function getDate () {
+        return $this->lazyInit( function () {
+            return date( 'd.m.Y' );
+        }, __METHOD__ );
+    }
+
 }
 ```
 
 Геттер с зависимостью от входящего значения:
 ``` php
-/**
- * @param string $string
- *
- * @return mixed[]
- */
-public function parseString ( $string ) {
-    return $this->lazyInit( function () use ( $string ) { # Строка переадется через use
-        return explode( ':', $string );
-    }, __METHOD__ . $string );
-}
+class ... {
 
-/**
- * @param int $timastamp
- *
- * @return string
- */
-public function formatTimastamp ( $timastamp ) {
-    return $this->lazyInit( function ( $t ) {
-        return date( 'd.m.Y', $t );
-    }, __METHOD__ . $timastamp, [ $timastamp ] ); # Метка времени передается через доп. данные
+    use \iiifx\LazyInit\LazyInitTrait;
+
+    /**
+     * @param string $string
+     *
+     * @return mixed[]
+     */
+    public function parseString ( $string ) {
+        return $this->lazyInit( function () use ( $string ) {
+            return explode( ':', $string );
+        }, __METHOD__ . $string );
+    }
+
+    /**
+     * @param int $timastamp
+     *
+     * @return string
+     */
+    public function formatTimastamp ( $timastamp ) {
+        return $this->lazyInit( function ( $t ) {
+            return date( 'd.m.Y', $t );
+        }, __METHOD__ . $timastamp, [ $timastamp ] );
+    }
+
 }
 ```
 
