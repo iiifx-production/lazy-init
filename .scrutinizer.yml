@@ -1,6 +1,12 @@
-# .scrutinizer.yml
-
+filter:
+    excluded_paths:
+        - 'tests/*'
 checks:
+    php: true
+coding_style:
     php:
         code_rating: true
         duplication: true
+        spaces:
+            within:
+                brackets: true
