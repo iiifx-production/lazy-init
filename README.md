@@ -221,6 +221,8 @@ echo Multiton::getInstance( 'master' )->key; # 'master'
 
 ## Тесты
 
+*OK (13 tests, 49 assertions)*
+
 [![Build Status][ico-travis]][link-travis]
 
 ## Лицензия
