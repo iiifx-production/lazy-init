@@ -9,6 +9,3 @@ coding_style:
     php:
         code_rating: true
         duplication: true
-        spaces:
-            within:
-                brackets: true
