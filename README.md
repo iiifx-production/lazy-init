@@ -2,7 +2,7 @@
 
 **LazyInit** - хелпер для быстрого создания методов ленивой(отложенной) инициализации.
 
-[![Latest Version on Packagist][ico-version]][link-packagist] [![Build Status][ico-travis]][link-travis] [![Scrutinizer Code Quality][ico-scrutinizer]][link-scrutinizer] [![Software License][ico-license]](LICENSE.md) [![Total Downloads][ico-downloads]][link-downloads]
+[![Latest Version on Packagist][ico-version]][link-packagist] [![Build Status][ico-travis]][link-travis] [![Code Quality][ico-scrutinizer]][link-scrutinizer] [![Code Coverage][ico-codecoverage]][link-scrutinizer] [![Software License][ico-license]](LICENSE.md) [![Total Downloads][ico-downloads]][link-downloads]
 
 **Отложенная (ленивая) инициализация** ([Lazy initialization][link-wikipedia-lazyinit]) - приём в программировании, когда некоторая ресурсоёмкая операция (создание объекта, вычисление значения) выполняется непосредственно перед тем, как будет использован её результат. Таким образом, инициализация выполняется «по требованию», а не заблаговременно.
 
@@ -242,6 +242,7 @@ echo Multiton::getInstance( 'master' )->key; # 'master'
 [ico-downloads]: https://img.shields.io/packagist/dt/iiifx-production/lazy-init.svg
 [ico-travis]: https://travis-ci.org/iiifx-production/lazy-init.svg
 [ico-scrutinizer]: https://scrutinizer-ci.com/g/iiifx-production/lazy-init/badges/quality-score.png?b=master
+[ico-codecoverage]: https://scrutinizer-ci.com/g/iiifx-production/lazy-init/badges/coverage.png?b=master
 
 [link-packagist]: https://packagist.org/packages/iiifx-production/lazy-init
 [link-downloads]: https://packagist.org/packages/iiifx-production/lazy-init
