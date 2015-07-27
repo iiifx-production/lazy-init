@@ -6,9 +6,16 @@ php:
   - 5.6
   - 7
 
-before_script:
+install:
   - composer self-update
-  - composer install
+  - composer install --no-interaction
 
 script:
   - composer test
+
+after_script:
+  - |
+    if [ $TRAVIS_PHP_VERSION = '5.5' ]; then
+      wget https://scrutinizer-ci.com/ocular.phar
+      php ocular.phar code-coverage:upload --format=php-clover ./code-coverage/coverage.clover
+    fi
