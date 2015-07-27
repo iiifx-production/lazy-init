@@ -2,12 +2,15 @@
 
 use iiifx\LazyInit\LazyInitTrait;
 
-class LazyInitTraitTest extends PHPUnit_Framework_TestCase {
+class LazyInitTraitTest extends PHPUnit_Framework_TestCase
+{
 
     use LazyInitTrait;
 
-    function testInitClosure () {
-        $this->assertNull( $this->lazyInit( function () {}, '1' ) );
+    function testInitClosure ()
+    {
+        $this->assertNull( $this->lazyInit( function () {
+        }, '1' ) );
         $this->assertNull( $this->lazyInit( function () {
             return NULL;
         }, '2' ) );
@@ -19,7 +22,8 @@ class LazyInitTraitTest extends PHPUnit_Framework_TestCase {
         }, '4' ) );
     }
 
-    function testClosureParams () {
+    function testClosureParams ()
+    {
         $a = 1;
         $this->lazyInit( function ( $b, $c ) use ( $a ) {
             $this->assertEquals( $a, 1 );
@@ -28,23 +32,31 @@ class LazyInitTraitTest extends PHPUnit_Framework_TestCase {
         }, '1', [ 2, 3 ] );
     }
 
-    function testCountResults () {
+    function testCountResults ()
+    {
         $this->assertEquals( count( $this->lazyInitData ), 0 );
-        $this->lazyInit( function () {}, '1' );
+        $this->lazyInit( function () {
+        }, '1' );
         $this->assertEquals( count( $this->lazyInitData ), 1 );
-        $this->lazyInit( function () {}, '1' );
+        $this->lazyInit( function () {
+        }, '1' );
         $this->assertEquals( count( $this->lazyInitData ), 1 );
-        $this->lazyInit( function () {}, '2' );
+        $this->lazyInit( function () {
+        }, '2' );
         $this->assertEquals( count( $this->lazyInitData ), 2 );
-        $this->lazyInit( function () {}, '2' );
+        $this->lazyInit( function () {
+        }, '2' );
         $this->assertEquals( count( $this->lazyInitData ), 2 );
-        $this->lazyInit( function () {}, '1' );
+        $this->lazyInit( function () {
+        }, '1' );
         $this->assertEquals( count( $this->lazyInitData ), 2 );
-        $this->lazyInit( function () {}, '3' );
+        $this->lazyInit( function () {
+        }, '3' );
         $this->assertEquals( count( $this->lazyInitData ), 3 );
     }
 
-    function testResults () {
+    function testResults ()
+    {
         $this->assertEquals( $this->lazyInit( function ( $v ) {
             return $v + 10;
         }, '1', [ 1 ] ), 11 );

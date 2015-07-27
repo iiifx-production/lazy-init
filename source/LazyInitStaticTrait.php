@@ -8,10 +8,11 @@ use Closure;
  * Class LazyInitStaticTrait
  *
  * @package iiifx\LazyInit
- * @author Vitaliy IIIFX Khomenko <iiifx@yandex.com>
- * @link https://github.com/iiifx-production/lazy-init
+ * @author  Vitaliy IIIFX Khomenko <iiifx@yandex.com>
+ * @link    https://github.com/iiifx-production/lazy-init
  */
-trait LazyInitStaticTrait {
+trait LazyInitStaticTrait
+{
 
     /**
      * @var mixed[]
@@ -25,7 +26,8 @@ trait LazyInitStaticTrait {
      *
      * @return mixed
      */
-    protected static function lazyInitStatic ( Closure $container, $key, $params = [ ] ) {
+    protected static function lazyInitStatic ( Closure $container, $key, $params = [ ] )
+    {
         if ( !array_key_exists( $key, static::$lazyInitStaticData ) ) {
             static::$lazyInitStaticData[ $key ] = call_user_func_array( $container, $params );
         }

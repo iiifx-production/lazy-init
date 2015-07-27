@@ -2,16 +2,20 @@
 
 use iiifx\LazyInit\LazyInitStaticTrait;
 
-class LazyInitStaticTraitTest extends PHPUnit_Framework_TestCase {
+class LazyInitStaticTraitTest extends PHPUnit_Framework_TestCase
+{
 
     use LazyInitStaticTrait;
 
-    function setUp () {
-        static::$lazyInitStaticData = [];
+    function setUp ()
+    {
+        static::$lazyInitStaticData = [ ];
     }
 
-    function testInitClosure () {
-        $this->assertNull( static::lazyInitStatic( function () {}, '1' ) );
+    function testInitClosure ()
+    {
+        $this->assertNull( static::lazyInitStatic( function () {
+        }, '1' ) );
         $this->assertNull( static::lazyInitStatic( function () {
             return NULL;
         }, '2' ) );
@@ -23,7 +27,8 @@ class LazyInitStaticTraitTest extends PHPUnit_Framework_TestCase {
         }, '4' ) );
     }
 
-    function testClosureParams () {
+    function testClosureParams ()
+    {
         $a = 1;
         static::lazyInitStatic( function ( $b, $c ) use ( $a ) {
             $this->assertEquals( $a, 1 );
@@ -32,23 +37,31 @@ class LazyInitStaticTraitTest extends PHPUnit_Framework_TestCase {
         }, '1', [ 2, 3 ] );
     }
 
-    function testCountResults () {
+    function testCountResults ()
+    {
         $this->assertEquals( count( static::$lazyInitStaticData ), 0 );
-        static::lazyInitStatic( function () {}, '1' );
+        static::lazyInitStatic( function () {
+        }, '1' );
         $this->assertEquals( count( static::$lazyInitStaticData ), 1 );
-        static::lazyInitStatic( function () {}, '1' );
+        static::lazyInitStatic( function () {
+        }, '1' );
         $this->assertEquals( count( static::$lazyInitStaticData ), 1 );
-        static::lazyInitStatic( function () {}, '2' );
+        static::lazyInitStatic( function () {
+        }, '2' );
         $this->assertEquals( count( static::$lazyInitStaticData ), 2 );
-        static::lazyInitStatic( function () {}, '2' );
+        static::lazyInitStatic( function () {
+        }, '2' );
         $this->assertEquals( count( static::$lazyInitStaticData ), 2 );
-        static::lazyInitStatic( function () {}, '1' );
+        static::lazyInitStatic( function () {
+        }, '1' );
         $this->assertEquals( count( static::$lazyInitStaticData ), 2 );
-        static::lazyInitStatic( function () {}, '3' );
+        static::lazyInitStatic( function () {
+        }, '3' );
         $this->assertEquals( count( static::$lazyInitStaticData ), 3 );
     }
 
-    function testResults () {
+    function testResults ()
+    {
         $this->assertEquals( static::lazyInitStatic( function ( $v ) {
             return $v + 10;
         }, '1', [ 1 ] ), 11 );

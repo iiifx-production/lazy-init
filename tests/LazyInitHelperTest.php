@@ -2,10 +2,13 @@
 
 use iiifx\LazyInit\LazyInitHelper;
 
-class LazyInitHelperTest extends PHPUnit_Framework_TestCase {
+class LazyInitHelperTest extends PHPUnit_Framework_TestCase
+{
 
-    function testInitClosure () {
-        $this->assertNull( LazyInitHelper::lazyInit( function () {}, '1' ) );
+    function testInitClosure ()
+    {
+        $this->assertNull( LazyInitHelper::lazyInit( function () {
+        }, '1' ) );
         $this->assertNull( LazyInitHelper::lazyInit( function () {
             return NULL;
         }, '2' ) );
@@ -17,7 +20,8 @@ class LazyInitHelperTest extends PHPUnit_Framework_TestCase {
         }, '4' ) );
     }
 
-    function testClosureParams () {
+    function testClosureParams ()
+    {
         $a = 1;
         LazyInitHelper::lazyInit( function ( $b, $c ) use ( $a ) {
             $this->assertEquals( $a, 1 );
@@ -26,7 +30,8 @@ class LazyInitHelperTest extends PHPUnit_Framework_TestCase {
         }, '5', [ 2, 3 ] );
     }
 
-    function testResults () {
+    function testResults ()
+    {
         $this->assertEquals( LazyInitHelper::lazyInit( function ( $v ) {
             return $v + 10;
         }, '6', [ 1 ] ), 11 );

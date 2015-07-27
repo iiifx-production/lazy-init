@@ -2,11 +2,13 @@
 
 use iiifx\LazyInit\LazyInitStaticTrait;
 
-class SingletonTest extends PHPUnit_Framework_TestCase {
+class SingletonTest extends PHPUnit_Framework_TestCase
+{
 
     use LazyInitStaticTrait;
 
-    function testSingleton () {
+    function testSingleton ()
+    {
         $this->assertEquals( LazyInitStaticTraitTest_Singleton::getInstance( 'key' )->key, 'key' );
         $this->assertEquals( LazyInitStaticTraitTest_Singleton::getInstance( 'key' )->key, 'key' );
         $this->assertEquals( LazyInitStaticTraitTest_Singleton::getInstance( 'wrong-key' )->key, 'key' );
@@ -20,16 +22,23 @@ class SingletonTest extends PHPUnit_Framework_TestCase {
  *
  * Для теста
  */
-class LazyInitStaticTraitTest_Singleton {
+class LazyInitStaticTraitTest_Singleton
+{
 
     use LazyInitStaticTrait;
 
-    private function __clone () {}
-    private function __wakeup () {}
+    private function __clone ()
+    {
+    }
+
+    private function __wakeup ()
+    {
+    }
 
     public $key;
 
-    private function __construct ( $key ) {
+    private function __construct ( $key )
+    {
         $this->key = $key;
     }
 
@@ -38,7 +47,8 @@ class LazyInitStaticTraitTest_Singleton {
      *
      * @return static
      */
-    public static function getInstance ( $key ) {
+    public static function getInstance ( $key )
+    {
         return static::lazyInitStatic( function ( $key ) {
             return new static( $key );
         }, __METHOD__, [ $key ] );

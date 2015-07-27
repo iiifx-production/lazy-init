@@ -8,10 +8,11 @@ use Closure;
  * Class LazyInitHelper
  *
  * @package iiifx\LazyInit
- * @author Vitaliy IIIFX Khomenko <iiifx@yandex.com>
- * @link https://github.com/iiifx-production/lazy-init
+ * @author  Vitaliy IIIFX Khomenko <iiifx@yandex.com>
+ * @link    https://github.com/iiifx-production/lazy-init
  */
-class LazyInitHelper {
+class LazyInitHelper
+{
 
     use LazyInitStaticTrait;
 
@@ -22,7 +23,8 @@ class LazyInitHelper {
      *
      * @return mixed
      */
-    public static function lazyInit ( Closure $closure, $key, $params = [ ] ) {
+    public static function lazyInit ( Closure $closure, $key, $params = [ ] )
+    {
         return self::lazyInitStatic( $closure, $key, $params );
     }
 
