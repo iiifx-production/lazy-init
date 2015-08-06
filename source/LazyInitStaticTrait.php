@@ -19,14 +19,17 @@ trait LazyInitStaticTrait
     protected static $lazyInitStaticData = [ ];
 
     /**
-     * @param Closure $container
-     * @param string  $key
-     * @param mixed[] $params
+     * @param Closure     $container
+     * @param string|null $key
+     * @param mixed[]     $params
      *
      * @return mixed
      */
-    protected static function lazyInitStatic ( Closure $container, $key, $params = [ ] )
+    protected static function lazyInitStatic ( Closure $container, $key = NULL, $params = [ ] )
     {
+        if ( is_null( $key ) ) {
+            $key = LazyInitHelper::createBacktraceKey();
+        }
         if ( !array_key_exists( $key, static::$lazyInitStaticData ) ) {
             static::$lazyInitStaticData[ $key ] = call_user_func_array( $container, $params );
         }
