@@ -36,7 +36,7 @@ class LazyInitHelper
     public static function createBacktraceKey ()
     {
         $backtrace = debug_backtrace( DEBUG_BACKTRACE_IGNORE_ARGS, 2 );
-        $parts = '';
+        $parts = [ ];
         if ( isset( $backtrace[ 1 ][ 'file' ] ) ) {
             $parts[] = $backtrace[ 1 ][ 'file' ];
         }
