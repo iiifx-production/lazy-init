@@ -13,7 +13,6 @@ use Closure;
  */
 trait LazyInitStaticTrait
 {
-
     /**
      * @var mixed[]
      */
@@ -33,5 +32,4 @@ trait LazyInitStaticTrait
         }
         return static::$lazyInitStaticData[ $key ];
     }
-
 }

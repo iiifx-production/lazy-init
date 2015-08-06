@@ -13,7 +13,6 @@ use Closure;
  */
 class LazyInitHelper
 {
-
     use LazyInitStaticTrait;
 
     /**
@@ -27,5 +26,4 @@ class LazyInitHelper
     {
         return self::lazyInitStatic( $closure, $key, $params );
     }
-
 }

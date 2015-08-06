@@ -8,17 +8,17 @@
 
 Классический пример использования:
 ``` php
-class DeepThought {
-
+class DeepThought
+{
     protected $answer;
 
-    public function getAnswer () {
+    public function getAnswer ()
+    {
         if ( is_null( $this->answer ) ) {
             $this->answer = 42;
         }
         return $this->answer;
     }
-
 }
 
 $deepThought = new DeepThought();
@@ -27,16 +27,16 @@ echo $deepThought->getAnswer(); # 42
 
 Аналогичный пример, но с использованием LazyInit:
 ``` php
-class DeepThought {
-
+class DeepThought
+{
     use \iiifx\LazyInit\LazyInitTrait;
 
-    public function getAnswer () {
+    public function getAnswer ()
+    {
         return $this->lazyInit( function () {
             return 42;
         }, __METHOD__ );
     }
-
 }
 
 $deepThought = new DeepThought();
@@ -66,19 +66,19 @@ mixed lazyInit( Closure $container, string $key, array $params = [] )
 
 Простой геттер:
 ``` php
-class Lazy {
-
+class Lazy
+{
     use \iiifx\LazyInit\LazyInitTrait;
 
     /**
      * @return string
      */
-    public function getDate () {
+    public function getDate ()
+    {
         return $this->lazyInit( function () {
             return date( 'd.m.Y' );
         }, __METHOD__ );
     }
-
 }
 
 $lazy = new Lazy();
@@ -89,8 +89,8 @@ echo $lazy->getDate(); # '12.07.2015'
 
 Геттер с зависимостью от входящего значения:
 ``` php
-class Lazy {
-
+class Lazy
+{
     use \iiifx\LazyInit\LazyInitTrait;
 
     /**
@@ -98,7 +98,8 @@ class Lazy {
      *
      * @return mixed[]
      */
-    public function parseString ( $string ) {
+    public function parseString ( $string )
+    {
         return $this->lazyInit( function () use ( $string ) {
             return explode( ':', $string );
         }, __METHOD__ . $string );
@@ -109,12 +110,12 @@ class Lazy {
      *
      * @return string
      */
-    public function formatTimastamp ( $timastamp ) {
+    public function formatTimastamp ( $timastamp )
+    {
         return $this->lazyInit( function ( $t ) {
             return date( 'd.m.Y', $t );
         }, __METHOD__ . $timastamp, [ $timastamp ] );
     }
-
 }
 
 $lazy = new Lazy();
@@ -126,19 +127,19 @@ var_export( $lazy->formatTimastamp( time() ) ); # '12.07.2015'
 
 Использование в статических методах:
 ``` php
-class LazyStatic {
-
+class LazyStatic
+{
     use \iiifx\LazyInit\LazyInitStaticTrait;
 
     /**
      * @return string
      */
-    public static function getDate () {
+    public static function getDate ()
+    {
         return self::lazyInitStatic( function () {
             return date( 'd.m.Y' );
         }, __METHOD__ );
     }
-
 }
 
 echo LazyStatic::getDate(); # '12.07.2015'
@@ -150,7 +151,8 @@ echo LazyStatic::getDate(); # '12.07.2015'
 ``` php
 use iiifx\LazyInit\LazyInitHelper;
 
-function buildString ( $array ) {
+function buildString ( $array )
+{
     return LazyInitHelper::lazyInit( function ( $v ) {
         return implode( '.', $v );
     }, 'build-string', [ $array ] );
@@ -163,8 +165,8 @@ echo buildString( [ 1, 5, 32 ] ); # '1.5.32'
 
 Использование при создании одиночки([Singleton][link-wikipedia-singleton]):
 ``` php
-class Singleton {
-
+class Singleton
+{
     use \iiifx\LazyInit\LazyInitStaticTrait;
 
     private function __construct () {}
@@ -174,12 +176,12 @@ class Singleton {
     /**
      * @return static
      */
-    public static function getInstance () {
+    public static function getInstance ()
+    {
         return static::lazyInitStatic( function () {
             return new static();
         }, __METHOD__ );
     }
-
 }
 $instance = Singleton::getInstance();
 ```
@@ -188,8 +190,8 @@ $instance = Singleton::getInstance();
 
 Использование при создании пула одиночек([Multiton][link-wikipedia-multiton]):
 ``` php
-class Multiton {
-
+class Multiton
+{
     use \iiifx\LazyInit\LazyInitStaticTrait;
 
     private function __clone () {}
@@ -197,7 +199,8 @@ class Multiton {
 
     public $key;
 
-    protected function __construct ( $key ) {
+    protected function __construct ( $key )
+    {
         $this->key = $key;
     }
 
@@ -206,12 +209,12 @@ class Multiton {
      *
      * @return static
      */
-    public static function getInstance ( $key ) {
+    public static function getInstance ( $key )
+    {
         return static::lazyInitStatic( function ( $key ) {
             return new static( $key );
         }, $key, [ $key ] );
     }
-
 }
 
 echo Multiton::getInstance( 'master' )->key; # 'master'
@@ -221,19 +224,11 @@ echo Multiton::getInstance( 'master' )->key; # 'master'
 
 ## Тесты
 
-*OK (13 tests, 49 assertions)*
-
 [![Build Status][ico-travis]][link-travis]
 
 ## Лицензия
 
 [![Software License][ico-license]](LICENSE.md)
-
-## @TODO
-
-- Сравнение производительности с классическим способом + анализ через Vulcan Logic Disassembler
-- Автоматическое определение $key с использованием debug_backtrace() при NULL значении
-- Использование $key с префиксом "+key-name" для уникализации значения совместно с debug_backtrace()
 
 
 
