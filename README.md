@@ -48,7 +48,7 @@ echo $deepThought->getAnswer(); # 42
 Используя Composer:
 
 ``` bash
-$ composer require "iiifx-production/lazy-init:0.2.*"
+$ php composer.phar require "iiifx-production/lazy-init:0.3.*"
 ```
 
 ## Использование
@@ -56,11 +56,11 @@ $ composer require "iiifx-production/lazy-init:0.2.*"
 LazyInitTrait содержит метод lazyInit() и свойство $lazyInitData, в котором буферизирует результаты вычислений.
 
 ``` php
-mixed lazyInit( Closure $container, string $key, array $params = [] )
+mixed lazyInit( Closure $container, string $key = NULL, array $params = [] )
 ```
 
 - **$container** - Closure-контейнер, содержащий в себе вычисления, должен вернуть результат.
-- **$key** - Ключ для сохранения результата вычисления Closure-контейнера, как правило это `__METHOD__`.
+- **$key** - Ключ для сохранения результата вычисления, как правило используется `__METHOD__`. Если не указывать ключ, то он будет сгенерирован автоматически.
 - **$params** - Дополнительные данные, которые будут переданы в Closure-контейнер при его запуске.
 
 
@@ -83,6 +83,29 @@ class Lazy
 
 $lazy = new Lazy();
 echo $lazy->getDate(); # '12.07.2015'
+```
+
+
+
+Простой геттер с автоматическим созданием ключа:
+``` php
+class Lazy
+{
+    use \iiifx\LazyInit\LazyInitTrait;
+
+    /**
+     * @return string
+     */
+    public function getMicrotime ()
+    {
+        return $this->lazyInit( function () {
+            return microtime( TRUE );
+        } );
+    }
+}
+
+$lazy = new Lazy();
+echo $lazy->getMicrotime(); # 1438928722.9734
 ```
 
 
