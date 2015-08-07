@@ -3,6 +3,7 @@
 namespace iiifx\LazyInit;
 
 use Closure;
+use ErrorException;
 
 /**
  * Class LazyInitHelper
@@ -32,17 +33,18 @@ class LazyInitHelper
 
     /**
      * @return string
+     *
+     * @throws ErrorException
      */
     public static function createBacktraceKey ()
     {
         $backtrace = debug_backtrace( DEBUG_BACKTRACE_IGNORE_ARGS, 2 );
-        $parts = [ ];
-        if ( isset( $backtrace[ 1 ][ 'file' ] ) ) {
+        if ( isset( $backtrace[ 1 ][ 'file' ] ) && isset( $backtrace[ 1 ][ 'line' ] ) ) {
+            $parts = [ ];
             $parts[] = $backtrace[ 1 ][ 'file' ];
-        }
-        if ( isset( $backtrace[ 1 ][ 'line' ] ) ) {
             $parts[] = $backtrace[ 1 ][ 'line' ];
+            return md5( implode( '#', $parts ) );
         }
-        return md5( implode( '#', $parts ) );
+        throw new ErrorException();
     }
 }
