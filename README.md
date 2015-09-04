@@ -48,7 +48,7 @@ echo $deepThought->getAnswer(); # 42
 Используя Composer:
 
 ``` bash
-$ php composer.phar require "iiifx-production/lazy-init:0.3.*"
+$ composer require "iiifx-production/lazy-init:0.3.*"
 ```
 
 ## Использование
