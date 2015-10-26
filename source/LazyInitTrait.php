@@ -3,6 +3,7 @@
 namespace iiifx\LazyInit;
 
 use Closure;
+use ErrorException;
 
 /**
  * Class LazyInitTrait.
@@ -24,10 +25,12 @@ trait LazyInitTrait
      * @param mixed[]     $params
      *
      * @return mixed
+     *
+     * @throws ErrorException
      */
     protected function lazyInit(Closure $container, $key = null, $params = [])
     {
-        if (is_null($key)) {
+        if ($key === null) {
             $key = LazyInitHelper::createBacktraceKey();
         }
         if (!array_key_exists($key, $this->lazyInitData)) {
