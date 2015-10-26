@@ -4,40 +4,37 @@ use iiifx\LazyInit\LazyInitStaticTrait;
 
 class SingletonTest extends PHPUnit_Framework_TestCase
 {
-
     use LazyInitStaticTrait;
 
-    function testSingleton ()
+    public function testSingleton()
     {
-        $this->assertEquals( LazyInitStaticTraitTest_Singleton::getInstance( 'key' )->key, 'key' );
-        $this->assertEquals( LazyInitStaticTraitTest_Singleton::getInstance( 'key' )->key, 'key' );
-        $this->assertEquals( LazyInitStaticTraitTest_Singleton::getInstance( 'wrong-key' )->key, 'key' );
-        $this->assertEquals( LazyInitStaticTraitTest_Singleton::getInstance( 'key' )->key, 'key' );
+        $this->assertEquals(LazyInitStaticTraitTest_Singleton::getInstance('key')->key, 'key');
+        $this->assertEquals(LazyInitStaticTraitTest_Singleton::getInstance('key')->key, 'key');
+        $this->assertEquals(LazyInitStaticTraitTest_Singleton::getInstance('wrong-key')->key, 'key');
+        $this->assertEquals(LazyInitStaticTraitTest_Singleton::getInstance('key')->key, 'key');
     }
-
 }
 
 /**
- * Class LazyInitStaticTraitTest_Singleton
+ * Class LazyInitStaticTraitTest_Singleton.
  *
- * Äëÿ òåñòà
+ * Ð”Ð»Ñ Ñ‚ÐµÑÑ‚Ð°
  */
 class LazyInitStaticTraitTest_Singleton
 {
-
     use LazyInitStaticTrait;
 
-    private function __clone ()
+    private function __clone()
     {
     }
 
-    private function __wakeup ()
+    private function __wakeup()
     {
     }
 
     public $key;
 
-    private function __construct ( $key )
+    private function __construct($key)
     {
         $this->key = $key;
     }
@@ -47,11 +44,10 @@ class LazyInitStaticTraitTest_Singleton
      *
      * @return static
      */
-    public static function getInstance ( $key )
+    public static function getInstance($key)
     {
-        return static::lazyInitStatic( function ( $key ) {
-            return new static( $key );
-        }, __METHOD__, [ $key ] );
+        return static::lazyInitStatic(function ($key) {
+            return new static($key);
+        }, __METHOD__, [$key]);
     }
-
 }
