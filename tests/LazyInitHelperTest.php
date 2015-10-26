@@ -2,8 +2,16 @@
 
 use iiifx\LazyInit\LazyInitHelper;
 
+require_once __DIR__.'/class/FailLazyInitHelper.php';
+
 class LazyInitHelperTest extends PHPUnit_Framework_TestCase
 {
+    public function testBacktraceKeyException()
+    {
+        $this->setExpectedException('ErrorException');
+        FailLazyInitHelper::createBacktraceKey();
+    }
+
     public function testInitClosure()
     {
         $this->assertNull(LazyInitHelper::lazyInit(function () {
