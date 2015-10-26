@@ -3,12 +3,13 @@
 namespace iiifx\LazyInit;
 
 use Closure;
+use ErrorException;
 
 /**
- * Class LazyInitStaticTrait
+ * Class LazyInitStaticTrait.
  *
- * @package iiifx\LazyInit
  * @author  Vitaliy IIIFX Khomenko <iiifx@yandex.com>
+ *
  * @link    https://github.com/iiifx-production/lazy-init
  */
 trait LazyInitStaticTrait
@@ -16,7 +17,7 @@ trait LazyInitStaticTrait
     /**
      * @var mixed[]
      */
-    protected static $lazyInitStaticData = [ ];
+    protected static $lazyInitStaticData = [];
 
     /**
      * @param Closure     $container
@@ -24,15 +25,18 @@ trait LazyInitStaticTrait
      * @param mixed[]     $params
      *
      * @return mixed
+     *
+     * @throws ErrorException
      */
-    protected static function lazyInitStatic ( Closure $container, $key = NULL, $params = [ ] )
+    protected static function lazyInitStatic(Closure $container, $key = null, $params = [])
     {
-        if ( is_null( $key ) ) {
+        if ($key === null) {
             $key = LazyInitHelper::createBacktraceKey();
         }
-        if ( !array_key_exists( $key, static::$lazyInitStaticData ) ) {
-            static::$lazyInitStaticData[ $key ] = call_user_func_array( $container, $params );
+        if (!array_key_exists($key, static::$lazyInitStaticData)) {
+            static::$lazyInitStaticData[ $key ] = call_user_func_array($container, $params);
         }
+
         return static::$lazyInitStaticData[ $key ];
     }
 }

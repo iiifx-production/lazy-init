@@ -6,10 +6,10 @@ use Closure;
 use ErrorException;
 
 /**
- * Class LazyInitHelper
+ * Class LazyInitHelper.
  *
- * @package iiifx\LazyInit
  * @author  Vitaliy IIIFX Khomenko <iiifx@yandex.com>
+ *
  * @link    https://github.com/iiifx-production/lazy-init
  */
 class LazyInitHelper
@@ -22,13 +22,16 @@ class LazyInitHelper
      * @param mixed[]     $params
      *
      * @return mixed
+     *
+     * @throws ErrorException
      */
-    public static function lazyInit ( Closure $closure, $key = NULL, $params = [ ] )
+    public static function lazyInit(Closure $closure, $key = null, $params = [])
     {
-        if ( is_null( $key ) ) {
-            $key = LazyInitHelper::createBacktraceKey();
+        if ($key === null) {
+            $key = static::createBacktraceKey();
         }
-        return self::lazyInitStatic( $closure, $key, $params );
+
+        return static::lazyInitStatic($closure, $key, $params);
     }
 
     /**
@@ -36,14 +39,15 @@ class LazyInitHelper
      *
      * @throws ErrorException
      */
-    public static function createBacktraceKey ()
+    public static function createBacktraceKey()
     {
-        $backtrace = debug_backtrace( DEBUG_BACKTRACE_IGNORE_ARGS, 2 );
-        if ( isset( $backtrace[ 1 ][ 'file' ] ) && isset( $backtrace[ 1 ][ 'line' ] ) ) {
-            $parts = [ ];
-            $parts[] = $backtrace[ 1 ][ 'file' ];
-            $parts[] = $backtrace[ 1 ][ 'line' ];
-            return md5( implode( '#', $parts ) );
+        $bt = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 2);
+        if (isset($bt[ 1 ][ 'file' ], $bt[ 1 ][ 'line' ])) {
+            $parts = [];
+            $parts[] = $bt[ 1 ][ 'file' ];
+            $parts[] = $bt[ 1 ][ 'line' ];
+
+            return md5(implode('#', $parts));
         }
         throw new ErrorException();
     }
