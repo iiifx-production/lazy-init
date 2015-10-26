@@ -12,11 +12,12 @@ class DeepThought
 {
     protected $answer;
 
-    public function getAnswer ()
+    public function getAnswer()
     {
-        if ( is_null( $this->answer ) ) {
+        if ($this->answer === null) {
             $this->answer = 42;
         }
+
         return $this->answer;
     }
 }
@@ -25,17 +26,17 @@ $deepThought = new DeepThought();
 echo $deepThought->getAnswer(); # 42
 ``` 
 
-Аналогичный пример, но с использованием LazyInit:
+Аналогичный пример с использованием LazyInit:
 ``` php
 class DeepThought
 {
     use \iiifx\LazyInit\LazyInitTrait;
 
-    public function getAnswer ()
+    public function getAnswer()
     {
-        return $this->lazyInit( function () {
+        return $this->lazyInit(function () {
             return 42;
-        }, __METHOD__ );
+        }, __METHOD__);
     }
 }
 
@@ -73,11 +74,11 @@ class Lazy
     /**
      * @return string
      */
-    public function getDate ()
+    public function getDate()
     {
-        return $this->lazyInit( function () {
-            return date( 'd.m.Y' );
-        }, __METHOD__ );
+        return $this->lazyInit(function () {
+            return date('d.m.Y');
+        }, __METHOD__);
     }
 }
 
@@ -96,11 +97,11 @@ class Lazy
     /**
      * @return string
      */
-    public function getMicrotime ()
+    public function getMicrotime()
     {
-        return $this->lazyInit( function () {
-            return microtime( TRUE );
-        } );
+        return $this->lazyInit(function () {
+            return microtime(true);
+        });
     }
 }
 
@@ -110,7 +111,7 @@ echo $lazy->getMicrotime(); # 1438928722.9734
 
 
 
-Геттер с зависимостью от входящего значения:
+Геттеры с зависимостью от входящих значений:
 ``` php
 class Lazy
 {
@@ -121,11 +122,11 @@ class Lazy
      *
      * @return mixed[]
      */
-    public function parseString ( $string )
+    public function parseString($string)
     {
-        return $this->lazyInit( function () use ( $string ) {
-            return explode( ':', $string );
-        }, __METHOD__ . $string );
+        return $this->lazyInit(function () use ($string) { # Передаем параметр в замыкание напрямую
+            return explode(':', $string);
+        }, __METHOD__.$string);
     }
 
     /**
@@ -133,17 +134,17 @@ class Lazy
      *
      * @return string
      */
-    public function formatTimastamp ( $timastamp )
+    public function formatTimastamp($timastamp)
     {
-        return $this->lazyInit( function ( $t ) {
-            return date( 'd.m.Y', $t );
-        }, __METHOD__ . $timastamp, [ $timastamp ] );
+        return $this->lazyInit(function ($t) {
+            return date('d.m.Y', $t);
+        }, __METHOD__.$timastamp, [$timastamp]); # Передаем параметр как свойство
     }
 }
 
 $lazy = new Lazy();
-var_export( $lazy->parseString( 'A:B:C' ) ); # [ 0 => 'A', 1 => 'B', 2 => 'C' ]
-var_export( $lazy->formatTimastamp( time() ) ); # '12.07.2015'
+var_export($lazy->parseString('A:B:C')); # [ 0 => 'A', 1 => 'B', 2 => 'C' ]
+var_export($lazy->formatTimastamp(time())); # '12.07.2015'
 ```
 
 
@@ -157,11 +158,11 @@ class LazyStatic
     /**
      * @return string
      */
-    public static function getDate ()
+    public static function getDate()
     {
-        return self::lazyInitStatic( function () {
-            return date( 'd.m.Y' );
-        }, __METHOD__ );
+        return self::lazyInitStatic(function () {
+            return date('d.m.Y');
+        }, __METHOD__);
     }
 }
 
@@ -174,14 +175,14 @@ echo LazyStatic::getDate(); # '12.07.2015'
 ``` php
 use iiifx\LazyInit\LazyInitHelper;
 
-function buildString ( $array )
+function buildString($array)
 {
-    return LazyInitHelper::lazyInit( function ( $v ) {
-        return implode( '.', $v );
-    }, 'build-string', [ $array ] );
+    return LazyInitHelper::lazyInit(function ($v) {
+        return implode('.', $v);
+    }, 'build-string', [$array]);
 }
 
-echo buildString( [ 1, 5, 32 ] ); # '1.5.32'
+echo buildString([1, 5, 32]); # '1.5.32'
 ```
 
 
@@ -192,18 +193,24 @@ class Singleton
 {
     use \iiifx\LazyInit\LazyInitStaticTrait;
 
-    private function __construct () {}
-    private function __clone () {}
-    private function __wakeup () {}
+    private function __construct()
+    {
+    }
+    private function __clone()
+    {
+    }
+    private function __wakeup()
+    {
+    }
 
     /**
      * @return static
      */
-    public static function getInstance ()
+    public static function getInstance()
     {
-        return static::lazyInitStatic( function () {
+        return static::lazyInitStatic(function () {
             return new static();
-        }, __METHOD__ );
+        }, __METHOD__);
     }
 }
 $instance = Singleton::getInstance();
@@ -217,12 +224,16 @@ class Multiton
 {
     use \iiifx\LazyInit\LazyInitStaticTrait;
 
-    private function __clone () {}
-    private function __wakeup () {}
+    private function __clone()
+    {
+    }
+    private function __wakeup()
+    {
+    }
 
     public $key;
 
-    protected function __construct ( $key )
+    protected function __construct($key)
     {
         $this->key = $key;
     }
@@ -232,17 +243,17 @@ class Multiton
      *
      * @return static
      */
-    public static function getInstance ( $key )
+    public static function getInstance($key)
     {
-        return static::lazyInitStatic( function ( $key ) {
-            return new static( $key );
-        }, $key, [ $key ] );
+        return static::lazyInitStatic(function ($key) {
+            return new static($key);
+        }, $key, [$key]);
     }
 }
 
-echo Multiton::getInstance( 'master' )->key; # 'master'
-echo Multiton::getInstance( 'slave' )->key; # 'slave'
-echo Multiton::getInstance( 'master' )->key; # 'master'
+echo Multiton::getInstance('master')->key; # 'master'
+echo Multiton::getInstance('slave')->key; # 'slave'
+echo Multiton::getInstance('master')->key; # 'master'
 ```
 
 ## Тесты
@@ -269,6 +280,10 @@ echo Multiton::getInstance( 'master' )->key; # 'master'
 [link-wikipedia-lazyinit]: https://ru.wikipedia.org/wiki/%D0%9E%D1%82%D0%BB%D0%BE%D0%B6%D0%B5%D0%BD%D0%BD%D0%B0%D1%8F_%D0%B8%D0%BD%D0%B8%D1%86%D0%B8%D0%B0%D0%BB%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D1%8F
 [link-wikipedia-singleton]: https://ru.wikipedia.org/wiki/%D0%9E%D0%B4%D0%B8%D0%BD%D0%BE%D1%87%D0%BA%D0%B0_(%D1%88%D0%B0%D0%B1%D0%BB%D0%BE%D0%BD_%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F)
 [link-wikipedia-multiton]: https://en.wikipedia.org/wiki/Multiton_pattern
+
+
+
+
 
 
 [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/iiifx-production/lazy-init/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
