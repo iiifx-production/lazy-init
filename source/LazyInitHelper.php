@@ -41,14 +41,14 @@ class LazyInitHelper
      */
     public static function createBacktraceKey()
     {
-        $bt = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 2);
-        if (isset($bt[ 1 ][ 'file' ], $bt[ 1 ][ 'line' ])) {
+        $backtrace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 2);
+        if (isset($backtrace[ 1 ][ 'file' ], $backtrace[ 1 ][ 'line' ])) {
             $parts = [];
-            $parts[] = $bt[ 1 ][ 'file' ];
-            $parts[] = $bt[ 1 ][ 'line' ];
+            $parts[] = $backtrace[ 1 ][ 'file' ];
+            $parts[] = $backtrace[ 1 ][ 'line' ];
 
             return md5(implode('#', $parts));
         }
-        throw new ErrorException();
+        throw new ErrorException('Unable to create BacktraceKey.');
     }
 }
