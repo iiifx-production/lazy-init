@@ -286,5 +286,5 @@ echo Multiton::getInstance('master')->key; # 'master'
 
 
 
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/iiifx-production/lazy-init/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/iiifx-production/lazy-init/trend.png?123)](https://bitdeli.com/free "Bitdeli Badge")
 
