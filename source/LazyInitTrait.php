@@ -28,7 +28,7 @@ trait LazyInitTrait
      *
      * @throws ErrorException
      */
-    protected function lazyInit(Closure $container, $key = null, $params = [])
+    protected function lazyInit(Closure $container, $key = null, array $params = [])
     {
         if ($key === null) {
             $key = LazyInitHelper::createBacktraceKey();

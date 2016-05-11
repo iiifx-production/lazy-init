@@ -25,7 +25,7 @@ class LazyInitHelper
      *
      * @throws ErrorException
      */
-    public static function lazyInit(Closure $closure, $key = null, $params = [])
+    public static function lazyInit(Closure $closure, $key = null, array $params = [])
     {
         if ($key === null) {
             $key = static::createBacktraceKey();
