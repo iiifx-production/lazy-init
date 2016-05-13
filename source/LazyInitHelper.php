@@ -25,30 +25,33 @@ class LazyInitHelper
      *
      * @throws ErrorException
      */
-    public static function lazyInit(Closure $closure, $key = null, array $params = [])
+    public static function lazyInit ( Closure $closure, $key = null, array $params = [ ] )
     {
-        if ($key === null) {
+        if ( $key === null ) {
             $key = static::createBacktraceKey();
         }
 
-        return static::lazyInitStatic($closure, $key, $params);
+        return static::lazyInitStatic( $closure, $key, $params );
     }
 
     /**
+     * @param int $backtraceDepth
+     *
      * @return string
      *
      * @throws ErrorException
      */
-    public static function createBacktraceKey()
+    public static function createBacktraceKey ( $backtraceDepth = 2 )
     {
-        $backtrace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 2);
-        if (isset($backtrace[ 1 ][ 'file' ], $backtrace[ 1 ][ 'line' ])) {
-            $parts = [];
-            $parts[] = $backtrace[ 1 ][ 'file' ];
-            $parts[] = $backtrace[ 1 ][ 'line' ];
+        $backtrace = debug_backtrace( DEBUG_BACKTRACE_IGNORE_ARGS, $backtraceDepth );
+        $backtraceKey = $backtraceDepth - 1;
+        if ( isset( $backtrace[ $backtraceKey ][ 'file' ], $backtrace[ $backtraceKey ][ 'line' ] ) ) {
+            $parts = [ ];
+            $parts[] = $backtrace[ $backtraceKey ][ 'file' ];
+            $parts[] = $backtrace[ $backtraceKey ][ 'line' ];
 
-            return md5(implode('#', $parts));
+            return md5( implode( '#', $parts ) );
         }
-        throw new ErrorException('Unable to create BacktraceKey.');
+        throw new ErrorException( 'Unable to create BacktraceKey.' );
     }
 }

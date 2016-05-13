@@ -17,7 +17,7 @@ trait LazyInitStaticTrait
     /**
      * @var mixed[]
      */
-    protected static $lazyInitStaticData = [];
+    protected static $lazyInitStaticData = [ ];
 
     /**
      * @param Closure     $container
@@ -28,13 +28,13 @@ trait LazyInitStaticTrait
      *
      * @throws ErrorException
      */
-    protected static function lazyInitStatic(Closure $container, $key = null, array $params = [])
+    protected static function lazyInitStatic ( Closure $container, $key = null, array $params = [ ] )
     {
-        if ($key === null) {
+        if ( $key === null ) {
             $key = LazyInitHelper::createBacktraceKey();
         }
-        if (!array_key_exists($key, static::$lazyInitStaticData)) {
-            static::$lazyInitStaticData[ $key ] = call_user_func_array($container, $params);
+        if ( !array_key_exists( $key, static::$lazyInitStaticData ) ) {
+            static::$lazyInitStaticData[ $key ] = call_user_func_array( $container, $params );
         }
 
         return static::$lazyInitStaticData[ $key ];
