@@ -29,6 +29,12 @@ class LazyInitStaticTraitTest extends PHPUnit_Framework_TestCase
         $this->assertTrue( static::lazyInitStatic( function () {
             return true;
         } ) );
+        $this->assertEquals( static::lazyInitStatic( function () {
+            return 11;
+        }, [ ] ), 11 );
+        $this->assertEquals( static::lazyInitStatic( function () {
+            return 22;
+        }, [ 2 ] ), 22 );
     }
 
     public function testClosureParams ()
@@ -45,6 +51,18 @@ class LazyInitStaticTraitTest extends PHPUnit_Framework_TestCase
             $this->assertEquals( $b, 20 );
             $this->assertEquals( $c, 30 );
         }, null, [ 20, 30 ] );
+        $a = 100;
+        static::lazyInitStatic( function ( $b, $c ) use ( $a ) {
+            $this->assertEquals( $a, 100 );
+            $this->assertEquals( $b, 200 );
+            $this->assertEquals( $c, 300 );
+        }, [ ], [ 200, 300 ] );
+        $a = 1000;
+        static::lazyInitStatic( function ( $b, $c ) use ( $a ) {
+            $this->assertEquals( $a, 1000 );
+            $this->assertEquals( $b, 2000 );
+            $this->assertEquals( $c, 3000 );
+        }, [ 1, 2, 3 ], [ 2000, 3000 ] );
     }
 
     public function testCountResults ()
@@ -74,6 +92,12 @@ class LazyInitStaticTraitTest extends PHPUnit_Framework_TestCase
         static::lazyInitStatic( function () {
         } );
         $this->assertEquals( count( static::$lazyInitStaticData ), 5 );
+        static::lazyInitStatic( function () {
+        }, [ ] );
+        $this->assertEquals( count( static::$lazyInitStaticData ), 6 );
+        static::lazyInitStatic( function () {
+        }, [ 2, 3, 4 ] );
+        $this->assertEquals( count( static::$lazyInitStaticData ), 7 );
     }
 
     public function testResults ()
@@ -90,6 +114,12 @@ class LazyInitStaticTraitTest extends PHPUnit_Framework_TestCase
         $this->assertEquals( static::lazyInitStatic( function ( $v ) {
             return $v + 200;
         }, null, [ 2 ] ), 202 );
+        $this->assertEquals( static::lazyInitStatic( function ( $v ) {
+            return $v + 300;
+        }, [ ], [ 3 ] ), 303 );
+        $this->assertEquals( static::lazyInitStatic( function ( $v ) {
+            return $v + 400;
+        }, [ 4, 5, 6 ], [ 4 ] ), 404 );
     }
 
     public function testBacktraceKey ()

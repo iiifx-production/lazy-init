@@ -48,10 +48,10 @@ class LazyInitHelper
      */
     public static function createBacktraceKey ( $backtraceDepth = 3 )
     {
-        if ( $backtraceData = static::createBacktraceData( $backtraceDepth ) ) {
-            return implode( static::PART_SEPARATOR, $backtraceData );
-        }
-        throw new ErrorException( 'Unable to create BacktraceKey.' );
+        return implode(
+            static::PART_SEPARATOR,
+            static::createBacktraceData( $backtraceDepth )
+        );
     }
 
     /**
@@ -82,6 +82,6 @@ class LazyInitHelper
      */
     public static function createDependencyKey ( array $dependency )
     {
-        return implode( static::PART_SEPARATOR, $dependency );
+        return md5( serialize( $dependency ) );
     }
 }

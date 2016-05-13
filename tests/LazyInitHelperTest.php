@@ -10,6 +10,24 @@ class LazyInitHelperTest extends PHPUnit_Framework_TestCase
     {
         $this->setExpectedException( 'ErrorException' );
         FailLazyInitHelper::createBacktraceKey();
+        $this->setExpectedException( 'ErrorException' );
+        FailLazyInitHelper::createBacktraceKey( '' );
+    }
+
+    public function testBacktraceDataException ()
+    {
+        $this->setExpectedException( 'ErrorException' );
+        FailLazyInitHelper::createBacktraceData( 0 );
+        $this->setExpectedException( 'ErrorException' );
+        FailLazyInitHelper::createBacktraceData( '' );
+        $this->setExpectedException( 'ErrorException' );
+        FailLazyInitHelper::createBacktraceData( 999 );
+    }
+
+    public function testDependencyKey ()
+    {
+        $this->setExpectedException( 'PHPUnit_Framework_Error' );
+        FailLazyInitHelper::createDependencyKey( '' );
     }
 
     public function testInitClosure ()
@@ -71,6 +89,7 @@ class LazyInitHelperTest extends PHPUnit_Framework_TestCase
         $this->assertEquals( $this->backtraceMethodTwo(), $result );
         $this->assertEquals( $this->backtraceMethodThree(), $result );
         $this->assertEquals( $this->backtraceMethodThree(), $result );
+
     }
 
     public function backtraceMethodOne ()

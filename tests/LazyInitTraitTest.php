@@ -22,6 +22,12 @@ class LazyInitTraitTest extends PHPUnit_Framework_TestCase
         $this->assertEquals( $this->lazyInit( function () {
             return 99;
         } ), 99 );
+        $this->assertEquals( $this->lazyInit( function () {
+            return 11;
+        }, [ ] ), 11 );
+        $this->assertEquals( $this->lazyInit( function () {
+            return 22;
+        }, [ 2 ] ), 22 );
     }
 
     public function testClosureParams ()
@@ -38,6 +44,12 @@ class LazyInitTraitTest extends PHPUnit_Framework_TestCase
             $this->assertEquals( $b, 20 );
             $this->assertEquals( $c, 30 );
         }, null, [ 20, 30 ] );
+        $a = 100;
+        $this->lazyInit( function ( $b, $c ) use ( $a ) {
+            $this->assertEquals( $a, 100 );
+            $this->assertEquals( $b, 200 );
+            $this->assertEquals( $c, 300 );
+        }, [ 1, 2, 3 ], [ 200, 300 ] );
     }
 
     public function testCountResults ()
@@ -67,6 +79,12 @@ class LazyInitTraitTest extends PHPUnit_Framework_TestCase
         $this->lazyInit( function () {
         } );
         $this->assertEquals( count( $this->lazyInitData ), 5 );
+        $this->lazyInit( function () {
+        }, [ ] );
+        $this->assertEquals( count( $this->lazyInitData ), 6 );
+        $this->lazyInit( function () {
+        }, [ 2, 3, 3 ] );
+        $this->assertEquals( count( $this->lazyInitData ), 7 );
     }
 
     public function testResults ()
@@ -83,6 +101,12 @@ class LazyInitTraitTest extends PHPUnit_Framework_TestCase
         $this->assertEquals( $this->lazyInit( function ( $v ) {
             return $v + 200;
         }, null, [ 2 ] ), 202 );
+        $this->assertEquals( $this->lazyInit( function ( $v ) {
+            return $v + 300;
+        }, [ ], [ 3 ] ), 303 );
+        $this->assertEquals( $this->lazyInit( function ( $v ) {
+            return $v + 400;
+        }, [ 4, 5, 6, 7 ], [ 4 ] ), 404 );
     }
 
     public function testBacktraceKey ()
