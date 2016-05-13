@@ -12,9 +12,9 @@ class DeepThought
 {
     protected $answer;
 
-    public function getAnswer()
+    public function getAnswer ()
     {
-        if ($this->answer === null) {
+        if ( $this->answer === null ) {
             $this->answer = 42;
         }
 
@@ -32,11 +32,11 @@ class DeepThought
 {
     use \iiifx\LazyInit\LazyInitTrait;
 
-    public function getAnswer()
+    public function getAnswer ()
     {
-        return $this->lazyInit(function () {
+        return $this->lazyInit( function () {
             return 42;
-        });
+        } );
     }
 }
 
@@ -49,7 +49,7 @@ echo $deepThought->getAnswer(); # 42
 Используя Composer:
 
 ``` bash
-$ composer require "iiifx-production/lazy-init:0.3.*"
+$ composer require "iiifx-production/lazy-init:1.*"
 ```
 
 ## Использование
@@ -57,21 +57,21 @@ $ composer require "iiifx-production/lazy-init:0.3.*"
 LazyInitTrait содержит метод lazyInit() и свойство $lazyInitData, в котором буферизирует результаты вычислений. Предназначен для использования в объектах в динамическом контексте.
 
 ``` php
-mixed lazyInit( Closure $container, string $key = NULL, array $params = [] )
+mixed lazyInit( Closure $container, string|array $dependency = null, array $params = [] )
 ```
 
 - **$container** - Closure-контейнер, содержащий в себе вычисления, должен вернуть результат.
-- **$key** - Ключ для сохранения результата вычисления, как правило используется `__METHOD__`. Если не указывать ключ, то он будет сгенерирован автоматически.
+- **$dependency** - Строка, массив зависимостей или null - для сохранения результата вычисления. Если не указывать ключ, то он будет сгенерирован автоматически.
 - **$params** - Дополнительные данные, которые будут переданы в Closure-контейнер при его запуске.
 
 LazyInitStaticTrait содержит метод lazyInitStatic() и свойство $lazyInitStaticData, в котором буферизирует результаты вычислений. Предназначен для использования в статических классах в статическом контексте.
 
 ``` php
-mixed lazyInitStatic( Closure $container, string $key = NULL, array $params = [] )
+mixed lazyInitStatic( Closure $container, string|array $dependency = null, array $params = [] )
 ```
 Параметры метода аналогичны.
 
-Методы способны автоматически генерировать $key для буферизации данных основываясь на точке вызова в коде. Это реализуется с использованием функции [debug_backtrace()][link-debug-backtrace].
+Методы способны автоматически генерировать ключ для буферизации данных основываясь на точке вызова в коде. Это реализуется с использованием функции [debug_backtrace()][link-debug-backtrace].
 
 ## Примеры
 
@@ -84,11 +84,11 @@ class Lazy
     /**
      * @return string
      */
-    public function getDate()
+    public function getDate ()
     {
-        return $this->lazyInit(function () {
-            return date('d.m.Y');
-        }, __METHOD__);
+        return $this->lazyInit( function () {
+            return date( 'd.m.Y' );
+        }, __METHOD__ );
     }
 }
 
@@ -107,11 +107,11 @@ class Lazy
     /**
      * @return string
      */
-    public function getMicrotime()
+    public function getMicrotime ()
     {
-        return $this->lazyInit(function () {
-            return microtime(true);
-        });
+        return $this->lazyInit( function () {
+            return microtime( true );
+        } );
     }
 }
 
@@ -132,11 +132,14 @@ class Lazy
      *
      * @return mixed[]
      */
-    public function parseString($string)
+    public function parseString ( $string )
     {
-        return $this->lazyInit(function () use ($string) { # Передаем параметр в замыкание напрямую
-            return explode(':', $string);
-        }, __METHOD__.$string);
+        return $this->lazyInit( function () use ( $string ) { # Передаем параметр в замыкание напрямую
+            return explode( ':', $string );
+        }, [
+            __METHOD__,
+            $string,
+        ] );
     }
 
     /**
@@ -144,17 +147,22 @@ class Lazy
      *
      * @return string
      */
-    public function formatTimastamp($timastamp)
+    public function formatTimastamp( $timastamp )
     {
-        return $this->lazyInit(function ($t) {
-            return date('d.m.Y', $t);
-        }, __METHOD__.$timastamp, [$timastamp]); # Передаем параметр как свойство
+        return $this->lazyInit( function ( $t ) {
+            return date( 'd.m.Y', $t );
+        }, [
+            __METHOD__,
+            $timastamp,
+        ], [
+            $timastamp # Передаем параметр как свойство
+        ] );
     }
 }
 
 $lazy = new Lazy();
-var_export($lazy->parseString('A:B:C')); # [ 0 => 'A', 1 => 'B', 2 => 'C' ]
-var_export($lazy->formatTimastamp(time())); # '12.07.2015'
+var_export( $lazy->parseString( 'A:B:C' ) ); # [ 0 => 'A', 1 => 'B', 2 => 'C' ]
+var_export( $lazy->formatTimastamp( time() ) ); # '12.07.2015'
 ```
 
 
@@ -168,11 +176,11 @@ class LazyStatic
     /**
      * @return string
      */
-    public static function getDate()
+    public static function getDate ()
     {
-        return self::lazyInitStatic(function () {
-            return date('d.m.Y');
-        }, __METHOD__);
+        return self::lazyInitStatic( function () {
+            return date( 'd.m.Y' );
+        }, __METHOD__ );
     }
 }
 
@@ -185,14 +193,14 @@ echo LazyStatic::getDate(); # '12.07.2015'
 ``` php
 use iiifx\LazyInit\LazyInitHelper;
 
-function buildString($array)
+function buildString( $array )
 {
-    return LazyInitHelper::lazyInit(function ($v) {
-        return implode('.', $v);
-    }, 'build-string', [$array]);
+    return LazyInitHelper::lazyInit( function ($v) {
+        return implode( '.', $v );
+    }, 'build-string', [ $array ] );
 }
 
-echo buildString([1, 5, 32]); # '1.5.32'
+echo buildString( [ 1, 5, 32 ] ); # '1.5.32'
 ```
 
 
@@ -203,24 +211,18 @@ class Singleton
 {
     use \iiifx\LazyInit\LazyInitStaticTrait;
 
-    private function __construct()
-    {
-    }
-    private function __clone()
-    {
-    }
-    private function __wakeup()
-    {
-    }
+    private function __construct () {}
+    private function __clone () {}
+    private function __wakeup () {}
 
     /**
      * @return static
      */
-    public static function getInstance()
+    public static function getInstance ()
     {
-        return static::lazyInitStatic(function () {
+        return static::lazyInitStatic( function () {
             return new static();
-        }, __METHOD__);
+        }, __METHOD__ );
     }
 }
 $instance = Singleton::getInstance();
@@ -234,16 +236,12 @@ class Multiton
 {
     use \iiifx\LazyInit\LazyInitStaticTrait;
 
-    private function __clone()
-    {
-    }
-    private function __wakeup()
-    {
-    }
+    private function __clone () {}
+    private function __wakeup () {}
 
     public $key;
 
-    protected function __construct($key)
+    protected function __construct ( $key )
     {
         $this->key = $key;
     }
@@ -253,17 +251,17 @@ class Multiton
      *
      * @return static
      */
-    public static function getInstance($key)
+    public static function getInstance ( $key )
     {
-        return static::lazyInitStatic(function ($key) {
-            return new static($key);
-        }, $key, [$key]);
+        return static::lazyInitStatic( function ( $key ) {
+            return new static( $key );
+        }, $key, [ $key ] );
     }
 }
 
-echo Multiton::getInstance('master')->key; # 'master'
-echo Multiton::getInstance('slave')->key; # 'slave'
-echo Multiton::getInstance('master')->key; # 'master'
+echo Multiton::getInstance( 'master' )->key; # 'master'
+echo Multiton::getInstance( 'slave' )->key; # 'slave'
+echo Multiton::getInstance( 'master' )->key; # 'master'
 ```
 
 ## Тесты
