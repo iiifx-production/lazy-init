@@ -26,8 +26,10 @@ class LazyInitHelperTest extends PHPUnit_Framework_TestCase
 
     public function testDependencyKey ()
     {
-        $this->setExpectedException( 'PHPUnit_Framework_Error' );
-        FailLazyInitHelper::createDependencyKey( '' );
+        if ( version_compare( PHP_VERSION, '5.6', '<=' ) ) {
+            $this->setExpectedException( 'PHPUnit_Framework_Error' );
+            FailLazyInitHelper::createDependencyKey( '' );
+        }
     }
 
     public function testInitClosure ()
