@@ -8,13 +8,18 @@ use ErrorException;
 /**
  * Class LazyInitHelper.
  *
- * @author  Vitaliy IIIFX Khomenko <iiifx@yandex.com>
+ * @author Vitaliy IIIFX Khomenko <iiifx@yandex.com>
  *
- * @link    https://github.com/iiifx-production/lazy-init
+ * @link   https://github.com/iiifx-production/lazy-init
  */
 class LazyInitHelper
 {
     use LazyInitStaticTrait;
+
+    /**
+     *
+     */
+    const PART_SEPARATOR = '#';
 
     /**
      * @param Closure     $closure
@@ -25,30 +30,58 @@ class LazyInitHelper
      *
      * @throws ErrorException
      */
-    public static function lazyInit(Closure $closure, $key = null, $params = [])
+    public static function lazyInit ( Closure $closure, $key = null, array $params = [ ] )
     {
-        if ($key === null) {
+        if ( $key === null ) {
             $key = static::createBacktraceKey();
         }
 
-        return static::lazyInitStatic($closure, $key, $params);
+        return static::lazyInitStatic( $closure, $key, $params );
     }
 
     /**
+     * @param int $backtraceDepth
+     *
      * @return string
      *
      * @throws ErrorException
      */
-    public static function createBacktraceKey()
+    public static function createBacktraceKey ( $backtraceDepth = 3 )
     {
-        $backtrace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 2);
-        if (isset($backtrace[ 1 ][ 'file' ], $backtrace[ 1 ][ 'line' ])) {
-            $parts = [];
-            $parts[] = $backtrace[ 1 ][ 'file' ];
-            $parts[] = $backtrace[ 1 ][ 'line' ];
+        return implode(
+            static::PART_SEPARATOR,
+            static::createBacktraceData( $backtraceDepth )
+        );
+    }
 
-            return md5(implode('#', $parts));
+    /**
+     * @param int $backtraceDepth
+     *
+     * @return array
+     *
+     * @throws ErrorException
+     */
+    public static function createBacktraceData ( $backtraceDepth = 0 )
+    {
+        $backtrace = debug_backtrace( DEBUG_BACKTRACE_IGNORE_ARGS, $backtraceDepth );
+        $backtraceKey = $backtraceDepth - 1;
+        if ( isset( $backtrace[ $backtraceKey ][ 'file' ], $backtrace[ $backtraceKey ][ 'line' ] ) ) {
+            $parts = [ ];
+            $parts[] = $backtrace[ $backtraceKey ][ 'file' ];
+            $parts[] = $backtrace[ $backtraceKey ][ 'line' ];
+
+            return $parts;
         }
-        throw new ErrorException('Unable to create BacktraceKey.');
+        throw new ErrorException( 'Unable to create BacktraceData.' );
+    }
+
+    /**
+     * @param array $dependency
+     *
+     * @return string
+     */
+    public static function createDependencyKey ( array $dependency )
+    {
+        return md5( serialize( $dependency ) );
     }
 }

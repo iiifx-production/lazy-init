@@ -1,12 +1,12 @@
 <phpunit backupGlobals="false"
-        backupStaticAttributes="false"
-        colors="true"
-        verbose="true"
-        convertErrorsToExceptions="true"
-        convertNoticesToExceptions="true"
-        convertWarningsToExceptions="true"
-        processIsolation="false"
-        stopOnFailure="false">
+         backupStaticAttributes="false"
+         colors="true"
+         verbose="true"
+         convertErrorsToExceptions="true"
+         convertNoticesToExceptions="true"
+         convertWarningsToExceptions="true"
+         processIsolation="false"
+         stopOnFailure="false">
 
     <testsuite name="Main Test Suite">
         <directory>./</directory>
