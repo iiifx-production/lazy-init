@@ -8,13 +8,18 @@ use ErrorException;
 /**
  * Class LazyInitHelper.
  *
- * @author  Vitaliy IIIFX Khomenko <iiifx@yandex.com>
+ * @author Vitaliy IIIFX Khomenko <iiifx@yandex.com>
  *
- * @link    https://github.com/iiifx-production/lazy-init
+ * @link   https://github.com/iiifx-production/lazy-init
  */
 class LazyInitHelper
 {
     use LazyInitStaticTrait;
+
+    /**
+     *
+     */
+    const PART_SEPARATOR = '#';
 
     /**
      * @param Closure     $closure
@@ -41,7 +46,22 @@ class LazyInitHelper
      *
      * @throws ErrorException
      */
-    public static function createBacktraceKey ( $backtraceDepth = 2 )
+    public static function createBacktraceKey ( $backtraceDepth = 3 )
+    {
+        if ( $backtraceData = static::createBacktraceData( $backtraceDepth ) ) {
+            return implode( static::PART_SEPARATOR, $backtraceData );
+        }
+        throw new ErrorException( 'Unable to create BacktraceKey.' );
+    }
+
+    /**
+     * @param int $backtraceDepth
+     *
+     * @return array
+     *
+     * @throws ErrorException
+     */
+    public static function createBacktraceData ( $backtraceDepth = 0 )
     {
         $backtrace = debug_backtrace( DEBUG_BACKTRACE_IGNORE_ARGS, $backtraceDepth );
         $backtraceKey = $backtraceDepth - 1;
@@ -50,8 +70,8 @@ class LazyInitHelper
             $parts[] = $backtrace[ $backtraceKey ][ 'file' ];
             $parts[] = $backtrace[ $backtraceKey ][ 'line' ];
 
-            return md5( implode( '#', $parts ) );
+            return $parts;
         }
-        throw new ErrorException( 'Unable to create BacktraceKey.' );
+        throw new ErrorException( 'Unable to create BacktraceData.' );
     }
 }
