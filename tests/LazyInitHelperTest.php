@@ -2,92 +2,92 @@
 
 use iiifx\LazyInit\LazyInitHelper;
 
-require_once __DIR__.'/class/FailLazyInitHelper.php';
+require_once __DIR__ . '/class/FailLazyInitHelper.php';
 
 class LazyInitHelperTest extends PHPUnit_Framework_TestCase
 {
-    public function testBacktraceKeyException()
+    public function testBacktraceKeyException ()
     {
-        $this->setExpectedException('ErrorException');
+        $this->setExpectedException( 'ErrorException' );
         FailLazyInitHelper::createBacktraceKey();
     }
 
-    public function testInitClosure()
+    public function testInitClosure ()
     {
-        $this->assertNull(LazyInitHelper::lazyInit(function () {
-        }, '1'));
-        $this->assertNull(LazyInitHelper::lazyInit(function () {
+        $this->assertNull( LazyInitHelper::lazyInit( function () {
+        }, '1' ) );
+        $this->assertNull( LazyInitHelper::lazyInit( function () {
             return;
-        }, '2'));
-        $this->assertTrue(LazyInitHelper::lazyInit(function () {
+        }, '2' ) );
+        $this->assertTrue( LazyInitHelper::lazyInit( function () {
             return true;
-        }, '3'));
-        $this->assertFalse(LazyInitHelper::lazyInit(function () {
+        }, '3' ) );
+        $this->assertFalse( LazyInitHelper::lazyInit( function () {
             return false;
-        }, '4'));
-        $this->assertTrue(LazyInitHelper::lazyInit(function () {
+        }, '4' ) );
+        $this->assertTrue( LazyInitHelper::lazyInit( function () {
             return true;
-        }));
+        } ) );
     }
 
-    public function testClosureParams()
+    public function testClosureParams ()
     {
         $a = 1;
-        LazyInitHelper::lazyInit(function ($b, $c) use ($a) {
-            $this->assertEquals($a, 1);
-            $this->assertEquals($b, 2);
-            $this->assertEquals($c, 3);
-        }, '5', [2, 3]);
+        LazyInitHelper::lazyInit( function ( $b, $c ) use ( $a ) {
+            $this->assertEquals( $a, 1 );
+            $this->assertEquals( $b, 2 );
+            $this->assertEquals( $c, 3 );
+        }, '5', [ 2, 3 ] );
         $a = 10;
-        LazyInitHelper::lazyInit(function ($b, $c) use ($a) {
-            $this->assertEquals($a, 10);
-            $this->assertEquals($b, 20);
-            $this->assertEquals($c, 30);
-        }, null, [20, 30]);
+        LazyInitHelper::lazyInit( function ( $b, $c ) use ( $a ) {
+            $this->assertEquals( $a, 10 );
+            $this->assertEquals( $b, 20 );
+            $this->assertEquals( $c, 30 );
+        }, null, [ 20, 30 ] );
     }
 
-    public function testResults()
+    public function testResults ()
     {
-        $this->assertEquals(LazyInitHelper::lazyInit(function ($v) {
+        $this->assertEquals( LazyInitHelper::lazyInit( function ( $v ) {
             return $v + 10;
-        }, '6', [1]), 11);
-        $this->assertEquals(LazyInitHelper::lazyInit(function ($v) {
+        }, '6', [ 1 ] ), 11 );
+        $this->assertEquals( LazyInitHelper::lazyInit( function ( $v ) {
             return $v + 100;
-        }, '6', [1]), 11);
-        $this->assertEquals(LazyInitHelper::lazyInit(function ($v) {
+        }, '6', [ 1 ] ), 11 );
+        $this->assertEquals( LazyInitHelper::lazyInit( function ( $v ) {
             return $v + 20;
-        }, null, [2]), 22);
-        $this->assertEquals(LazyInitHelper::lazyInit(function ($v) {
+        }, null, [ 2 ] ), 22 );
+        $this->assertEquals( LazyInitHelper::lazyInit( function ( $v ) {
             return $v + 200;
-        }, null, [2]), 202);
+        }, null, [ 2 ] ), 202 );
     }
 
-    public function testBacktraceKey()
+    public function testBacktraceKey ()
     {
         $result = $this->backtraceMethodOne();
-        $this->assertEquals($this->backtraceMethodOne(), $result);
-        $this->assertEquals($this->backtraceMethodOne(), $result);
-        $this->assertEquals($this->backtraceMethodTwo(), $result);
-        $this->assertEquals($this->backtraceMethodTwo(), $result);
-        $this->assertEquals($this->backtraceMethodThree(), $result);
-        $this->assertEquals($this->backtraceMethodThree(), $result);
+        $this->assertEquals( $this->backtraceMethodOne(), $result );
+        $this->assertEquals( $this->backtraceMethodOne(), $result );
+        $this->assertEquals( $this->backtraceMethodTwo(), $result );
+        $this->assertEquals( $this->backtraceMethodTwo(), $result );
+        $this->assertEquals( $this->backtraceMethodThree(), $result );
+        $this->assertEquals( $this->backtraceMethodThree(), $result );
     }
 
-    public function backtraceMethodOne()
+    public function backtraceMethodOne ()
     {
-        usleep(1);
+        usleep( 1 );
 
-        return LazyInitHelper::lazyInit(function () {
-            return microtime(true);
-        });
+        return LazyInitHelper::lazyInit( function () {
+            return microtime( true );
+        } );
     }
 
-    public function backtraceMethodTwo()
+    public function backtraceMethodTwo ()
     {
         return $this->backtraceMethodOne();
     }
 
-    public function backtraceMethodThree()
+    public function backtraceMethodThree ()
     {
         return $this->backtraceMethodTwo();
     }
