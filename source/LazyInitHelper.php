@@ -74,4 +74,14 @@ class LazyInitHelper
         }
         throw new ErrorException( 'Unable to create BacktraceData.' );
     }
+
+    /**
+     * @param array $dependency
+     *
+     * @return string
+     */
+    public static function createDependencyKey ( array $dependency )
+    {
+        return implode( static::PART_SEPARATOR, $dependency );
+    }
 }

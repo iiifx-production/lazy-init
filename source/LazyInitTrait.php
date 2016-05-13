@@ -20,18 +20,23 @@ trait LazyInitTrait
     protected $lazyInitData = [ ];
 
     /**
-     * @param Closure     $container
-     * @param string|null $key
-     * @param mixed[]     $params
+     * @param Closure           $container
+     * @param string|array|null $dependency
+     * @param mixed[]           $params
      *
      * @return mixed
      *
      * @throws ErrorException
      */
-    protected function lazyInit ( Closure $container, $key = null, array $params = [ ] )
+    protected function lazyInit ( Closure $container, $dependency = null, array $params = [ ] )
     {
-        if ( $key === null ) {
+        /** @var string $key */
+        if ( $dependency === null ) {
             $key = LazyInitHelper::createBacktraceKey();
+        } elseif ( is_array( $dependency ) ) {
+            $key = LazyInitHelper::createDependencyKey( $dependency );
+        } else {
+            $key = $dependency;
         }
         if ( !array_key_exists( $key, $this->lazyInitData ) ) {
             $this->lazyInitData[ $key ] = call_user_func_array( $container, $params );
