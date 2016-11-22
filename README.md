@@ -2,7 +2,7 @@
 
 **LazyInit** - хелпер для быстрого создания методов ленивой(отложенной) инициализации.
 
-[![SensioLabsInsight](https://insight.sensiolabs.com/projects/29316ddf-5534-44ed-8849-085effbfcbe7/small.png)](https://insight.sensiolabs.com/projects/29316ddf-5534-44ed-8849-085effbfcbe7)
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/29316ddf-5534-44ed-8849-085effbfcbe7/big.png)](https://insight.sensiolabs.com/projects/29316ddf-5534-44ed-8849-085effbfcbe7)
 
 [![Latest Version on Packagist][ico-version]][link-packagist] [![Code Quality][ico-scrutinizer]][link-scrutinizer] [![Total Downloads][ico-downloads]][link-downloads] [![Build Status][ico-travis]][link-travis]
 
