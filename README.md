@@ -4,8 +4,8 @@
 
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/29316ddf-5534-44ed-8849-085effbfcbe7/big.png)](https://insight.sensiolabs.com/projects/29316ddf-5534-44ed-8849-085effbfcbe7)
 
-[![Latest Version on Packagist][ico-version]][link-packagist] [![Code Quality][ico-scrutinizer]][link-scrutinizer] [![Total Downloads][ico-downloads]][link-downloads] [![Build Status][ico-travis]][link-travis]
-
+[![Latest Version on Packagist][ico-version]][link-packagist] [![Build Status][ico-travis]][link-travis]
+[![Total Downloads][ico-downloads]][link-downloads] 
 
 **Отложенная (ленивая) инициализация** ([Lazy initialization][link-wikipedia-lazyinit]) - приём в программировании, когда некоторая ресурсоёмкая операция (создание объекта, вычисление значения) выполняется непосредственно перед тем, как будет использован её результат. Таким образом, инициализация выполняется «по требованию», а не заблаговременно.
 
